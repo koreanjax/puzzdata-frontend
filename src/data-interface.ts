@@ -78,4 +78,3 @@ interface CardResult {
   limitPercent: number;
   orbBgmId: number;
 }
-}

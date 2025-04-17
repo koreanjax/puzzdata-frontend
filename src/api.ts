@@ -1,4 +1,5 @@
 import { Input, SearchResult, CardResult } from './data-interface.ts'
+import { emptySearchResult, emptyCardResult } from './data-interface-factory.ts'
 
 const API_URL: string = 'http://localhost:8080'
 const API_SEARCH: string = '/search/'
@@ -23,7 +24,24 @@ export const fetchSearch = async (search): SearchResult[] => {
     }
     data = await response.json()
   } catch (e: any) {
-    setError(e.message)
+    // TODO
+  }
+  return(data)
+}
+
+export const fetchCard = async (search: number): CardResult => {
+  let data: CardResult = emptyCardResult()
+  try {
+    let queryString: string = API_URL + API_CARD + API_KEY_ID + search
+
+    const response = await fetch(queryString)
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    data = await response.json()
+  } catch (e: any) {
+    TODO
   }
   return(data)
 }
