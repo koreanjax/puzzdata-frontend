@@ -1,0 +1,36 @@
+.awakenings {
+  display: flex;
+  column-gap: 5px
+}
+
+.awakening {
+  display: table-cell;
+}
+
+.card-main {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  column-gap: .5rem;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.card-name {
+  width: 100%;
+  font-family: sans-serif;
+  text-align: left;
+}
+
+.card-id {
+  font-family: Tahoma;
+  text-align: left;
+}
+
+.card-sm {
+  font-size: 1rem;
+  line-height: 1.25rem
+}
