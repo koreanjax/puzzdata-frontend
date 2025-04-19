@@ -1,10 +1,13 @@
 .awakenings {
   display: flex;
-  column-gap: 5px
 }
 
 .awakening {
   display: table-cell;
+}
+
+.card {
+  padding:0.5rem;
 }
 
 .card-main {

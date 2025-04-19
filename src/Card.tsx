@@ -5,22 +5,35 @@ import img from './assets/07170.webp'
 import { emptyCardResult } from './data-interface-factory.ts'
 import { CardOrganized, emptyCardOrganized, CardApiToOrganized } from './card-organized-interface.ts'
 
+
 export default function Card({id}: { id: number }) {
+
   const [card, setCard] = useState<CardOrganized>(emptyCardOrganized)
   const [level, setLevel] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+
   const [hp, setHp] = useState(0)
   const [atk, setAtk] = useState(0)
   const [rcv, setRcv] = useState(0)
-  const [loaded, setLoaded] = useState(false)
+  
+  const awkns = Object.values(import.meta.glob('./assets/awakenings/*.webp', { eager: true, as: 'url' }))
 
   useEffect(() => {
-    if (id > 0) {
-      fetchCard(id).then(result => {
-        setCard(CardApiToOrganized(result))
-        setLevel(card.maxLevel)
-        setStats()
-        setLoaded(true)
-      })
+    fetchCard(id).then(result => {
+      setCard(CardApiToOrganized(result))
+    })
+  },[id])
+  
+  useEffect(() => {
+    setLevel(card.maxLevel)
+    setStats()
+  },[card])
+
+  useEffect(() => {
+    if(id <= 0) {
+      setLoaded(false)
+    } else {
+      setLoaded(true)
     }
   },[id])
 
@@ -28,23 +41,39 @@ export default function Card({id}: { id: number }) {
     if(level > 0) {
       setStats()
     }
-  },[id,level])
+  },[level])
 
-  const calcStats = (vals: number[]): number => {
-    let growth: nubmer = (card.maxLevel > 1) ? (level - 1) / (card.maxLevel - 1) : 1
-    let diff: number = vals[1] - vals[0]
-    let value: number = vals[0] + diff * Math.pow(growth, vals[2]/10)
-    return(Math.round(value))
+  // Should put these in a helper file since not really needed here
+  const calcStats = (vals: number[], statFlag: number): number => {
+    if (level < 100) {
+      let growth: nubmer = (card.maxLevel > 1) ? (level - 1) / (card.maxLevel - 1) : 1
+      let diff: number = vals[1] - vals[0]
+      let finalStat: number = vals[0] + diff * Math.pow(growth, vals[2]/10)
+      return(Math.round(finalStat))
+    } else if (level < 111 && level > 99){
+      let limitBreakStat: number = vals[1]*((card.limitPercent/100)+1)
+      let statPerLimitLevel: number = (limitBreakStat - vals[1])/11
+      let finalStat: number = (level - 99)*statPerLimitLevel+vals[1]
+      return(Math.round(finalStat))
+    } else if (level > 110) {
+      let initStat: number = vals[1]*((card.limitPercent/100)+1)
+      let statPerSuperLimitLevel: number = (vals[1]*(statFlag/100)/10)
+      let finalStat: number = (level - 110)*statPerSuperLimitLevel+initStat
+      return(Math.round(finalStat))
+    }
   }
 
   const setStats = () => {
-    setHp(calcStats(card.hpVals))
-    setAtk(calcStats(card.atkVals))
-    setRcv(calcStats(card.rcvVals))
+    setHp(calcStats(card.hpVals, 10))
+    setAtk(calcStats(card.atkVals, 5))
+    setRcv(calcStats(card.rcvVals, 5))
   }
 
+  // This can probably be put into helper as well, have it just return a valid level for case
   const checkLevel = (newLevel) => {
-    if(newLevel > card.maxLevel) {
+    if(newLevel > 120 && card.limitPercent > 0) {
+      setLevel(120)
+    } else if (newLevel > card.maxLevel && card.limitPercent === 0) {
       setLevel(card.maxLevel)
     } else {
       setLevel(newLevel)
@@ -59,7 +88,7 @@ export default function Card({id}: { id: number }) {
   <div className="card">
     <div>
       {
-        <div key={card.id}>
+        <div key={card.id} className="card">
           <div className="card-main">
             <img className="card-icon" src={img} />
             <div>
@@ -69,18 +98,18 @@ export default function Card({id}: { id: number }) {
           </div>
           <div>
             <div className="awakenings">
-              {card.awkns.map((awkn, index) => (
-                <div key={index} className="awakening">{awkn}</div>
+              {card.awkns.map((index, key) => (
+                <img key={key} className="awakening" src={awkns[index]} />
               ))}
             </div>
             <div className="awakenings">
-              {card.sAwkns.map((sAwkn, index) => (
-                <div key={index} className="awakeings">{sAwkn}</div>
+              {card.sAwkns.map((index, key) => (
+                <img key={key} className="awakeings" src={awkns[index]} />
               ))}
             </div>
             <div className="level-input">
               Level: 
-              <input value={level} onChange={e => checkLevel(e.target.value)}/>
+              <input value={level} onChange={e => checkLevel(e.target.value)} />
             </div>
             <div className="stats">
               <div>HP: {hp}</div>
