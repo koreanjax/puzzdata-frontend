@@ -16,7 +16,7 @@ export default function Card({id}: { id: number }) {
   const [atk, setAtk] = useState(0)
   const [rcv, setRcv] = useState(0)
   
-  const awkns = Object.values(import.meta.glob('./assets/awakenings/*.webp', { eager: true, as: 'url' }))
+  const awknsImg = Object.values(import.meta.glob('./assets/awakenings/*.webp', { eager: true, as: 'url' }))
 
   useEffect(() => {
     fetchCard(id).then(result => {
@@ -25,6 +25,7 @@ export default function Card({id}: { id: number }) {
   },[id])
   
   useEffect(() => {
+    console.log(card)
     setLevel(card.maxLevel)
     setStats()
   },[card])
@@ -84,6 +85,41 @@ export default function Card({id}: { id: number }) {
    return(<div/>)
   }
 
+  const Awakening = ({awkns}) => {
+    return (
+      <div className="awakenings">
+        {card.awkns.map((index, key) => (
+          <img key={key} className="awakening" src={awknsImg[index]} />
+        ))}
+      </div>
+    )
+  }
+
+  const SuperAwakening = ({awkns}) => {
+    if(awkns.length === 0) {
+      return(null)
+    }
+    return (
+      <div className="awakenings">
+        <img key={-1} className="awakening" src={awknsImg[0]} />
+        {card.sAwkns.map((index, key) => (
+          <img key={index} className="awakening" src={awknsImg[index]} />
+        ))}
+      </div>
+    )
+  }
+
+  const SyncAwakening = ({awkn}) => {
+    if(awkn === 0) {
+      return(null)
+    }
+    return (
+      <div className="awakenings">
+        <img key={awkn} className="awakening" src={awknsImg[awkn]} />
+      </div>
+    )
+  }
+
   return (
   <div className="card">
     <div>
@@ -97,16 +133,9 @@ export default function Card({id}: { id: number }) {
             </div>
           </div>
           <div>
-            <div className="awakenings">
-              {card.awkns.map((index, key) => (
-                <img key={key} className="awakening" src={awkns[index]} />
-              ))}
-            </div>
-            <div className="awakenings">
-              {card.sAwkns.map((index, key) => (
-                <img key={key} className="awakeings" src={awkns[index]} />
-              ))}
-            </div>
+            <Awakening awkns={card.awkns} />
+            <SuperAwakening awkns={card.sAwkns} />
+            <SyncAwakening awkn={card.syncAwkn} />
             <div className="level-input">
               Level: 
               <input value={level} onChange={e => checkLevel(e.target.value)} />

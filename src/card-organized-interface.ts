@@ -12,8 +12,7 @@ export interface CardOrganized {
   atkVals: numbers[];
   rcvVals: numbers[];
   limitPercent: number;
-  maxExp: number;
-  expGrowth: number;
+  expVals: number[];
   active: number;
   leader: number;
   from: number;
@@ -28,6 +27,8 @@ export interface CardOrganized {
   collab: number;
   keywords: string[];
   orbBgmId: number;
+  syncAwkn: number;
+  syncMats: string[];
 }
 
 export const emptyCardOrganized = () => ({
@@ -58,63 +59,63 @@ export const emptyCardOrganized = () => ({
   group: -1,
   mp: -1,
   collab: -1,
-  keywords: '',
-  orbBgmId: -1
+  keywords: [],
+  orbBgmId: -1,
+  syncAwkn: -1,
+  syncMats: []
 })
 
 const splitAndTrim = (str: string, delimiter: string): string[] => {
-  return str.split(/[|]/).map(s => s.trim());
+  return str.split(/[{delimiter}]/).map(s => s.trim());
+}
+
+const checkStringAndSplitToStr = (str: string, delimiter: string): string[] => {
+  if(!str) {
+    return([])
+  } else {
+    return str.split(delimiter).map(s => s.trim());
+  }
+}
+
+const checkStringAndSplitToNum = (str: string, delimiter: string): number[] => {
+  if(!str) {
+    return([])
+  } else {
+    return str.split(delimiter).map(Number)
+  }
 }
 
 export const CardApiToOrganized = (result: CardResult): CardOrganized => {
-  let tempAttrs: number[] = [result.attr_1, result.attr_2, result.attr_3]
-  let tempTypes: number[] = [result.type_1, result.type_2, result.type_3]
-  let tempAwkns: number[] = [result.awkn_1, result.awkn_2, result.awkn_3, result.awkn_4, result.awkn_5, result.awkn_6, result.awkn_7, result.awkn_8, result.awkn_9]
-  let tempSAwkns: number[] = [result.s_awkn_1, result.s_awkn_2, result.s_awkn_3, result.s_awkn_4, result.s_awkn_5, result.s_awkn_6, result.s_awkn_7, result.s_awkn_8, result.s_awkn_9, result.s_awkn_10]
-  let tempKeywords: string[] = splitAndTrim(result.keywords, "|")
-
-  tempAttrs = tempAttrs.filter(function(val) {
-    return val >= 0;
-  })
-  tempTypes = tempTypes.filter(function(val) {
-    return val >= 0;
-  })
-  tempAwkns = tempAwkns.filter(function(val) {
-    return val !== 0;
-  })
-  tempSAwkns = tempSAwkns.filter(function(val) {
-    return val !== 0;
-  })
-
   let organized: CardOrganized = {
     id: result.id,
     name: result.name,
-    attrs: tempAttrs,
-    types: tempTypes,
+    attrs: checkStringAndSplitToNum(result.attrs, '|'),
+    types: checkStringAndSplitToNum(result.types, '|'),
     cost: result.cost,
     ultEvo: result.ult_evo,
     maxLevel: result.max_level,
     coinValue: result.coin_value,
-    hpVals: [result.hp_init, result.hp_max, result.hp_growth],
-    atkVals: [result.atk_init, result.atk_max, result.atk_growth],
-    rcvVals: [result.rcv_init, result.rcv_max, result.rcv_growth],
+    hpVals: checkStringAndSplitToNum(result.hp_vals, '|'),
+    atkVals: checkStringAndSplitToNum(result.atk_vals, '|'),
+    rcvVals: checkStringAndSplitToNum(result.rcv_vals, '|'),
     limitPercent: result.limit_break,
-    maxExp: result.max_exp,
-    expGrowth: result.exp_growth,
+    expVals: checkStringAndSplitToNum(result.exp_vals, '|'),
     active: result.active,
     leader: result.leader,
     from: result.from,
-    mats: [result.mat_1, result.mat_2, result.mat_3, result.mat_4, result.mat_5],
-    awkns: tempAwkns,
-    sAwkns: tempSAwkns,
+    mats: checkStringAndSplitToNum(result.evolve_mats, '|'),
+    awkns: checkStringAndSplitToNum(result.awkns, '|'),
+    sAwkns: checkStringAndSplitToNum(result.super_awkns, '|'),
     assist: result.assist,
     expand: result.expand,
     base: result.base,
     group: result.number,
     mp: result.mp,
     collab: result.collab,
-    keywords: tempKeywords,
-    orbBgmId: result.orb_bgm_id
+    keywords: checkStringAndSplitToStr(result.keywords, '|'),
+    orbBgmId: result.orb_bgm_id,
+    syncAwkn: result.sync_awkn,
+    syncMats: checkStringAndSplitToStr(result.sync_mats, '|')
   }
   return(organized)
 }
