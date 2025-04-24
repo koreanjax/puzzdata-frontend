@@ -1,4 +1,4 @@
-import { SearchResult, CardResult }  from './data-interface.ts'
+import { SearchResult, CardResult, SkillResult }  from './data-interface.ts'
 
 export const emptySearchResult = (): SearchResult => ({
   id: -1,
@@ -20,8 +20,8 @@ export const emptyCardResult = (): CardResult => ({
   atkVals: '',
   rcvVals: '',
   expVals: '',
-  activeSkill: -1,
-  leaderSkill: -1,
+  activeSkill: 0,
+  leaderSkill: 0,
   evolvedFrom: -1,
   mats: '',
   dMats: '',
@@ -38,4 +38,15 @@ export const emptyCardResult = (): CardResult => ({
   orbBgmId: -1,
   syncAwkn: -1,
   syncMats: ''
+})
+
+export const emptySkillResult = (): SkillResult => ({
+  id: 0,
+  name: '',
+  text: '',
+  skillType: -1,
+  skillMaxLevel: -1,
+  skillInitCd: -1,
+  unknown1: '',
+  parameters: ''
 })

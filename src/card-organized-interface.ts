@@ -47,8 +47,8 @@ export const emptyCardOrganized = () => ({
   limitPercent: -1,
   maxExp: -1,
   expGrowth: -1,
-  active: -1,
-  leader: -1,
+  active: 0,
+  leader: 0,
   from: -1,
   mats: [],
   awkns: [],
@@ -64,6 +64,7 @@ export const emptyCardOrganized = () => ({
   syncAwkn: -1,
   syncMats: []
 })
+
 
 const splitAndTrim = (str: string, delimiter: string): string[] => {
   return str.split(/[{delimiter}]/).map(s => s.trim());

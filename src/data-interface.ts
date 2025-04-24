@@ -42,3 +42,14 @@ export interface CardResult {
   sync_awkn: number;
   sync_mats: string;
 }
+
+export interface SkillResult {
+  id: number;
+  name: string;
+  text: string;
+  skill_type: number;
+  skill_max_level: number;
+  skill_init_cd: number;
+  unknown_1: string;
+  parameters: string;
+}
