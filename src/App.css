@@ -1,7 +1,8 @@
-body {
-  box-sizing: border-box;
-  place-items: center;
-  /*background: #023b29;*/
-  min-width: 35rem;
-  max-width: 35rem;
+.App {
+  position: relative
+
+}
+
+.card + .search-table {
+  filter: blur(10px);
 }

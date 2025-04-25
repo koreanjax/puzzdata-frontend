@@ -31,6 +31,7 @@
 
 .skill-text {
   box-sizing: border-box;
+  overflow-wrap: normal;
   width:100%;
   padding:0.5rem;
   border-width: 0px;

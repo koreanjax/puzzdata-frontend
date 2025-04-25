@@ -1,12 +1,14 @@
 :root {
   margin:0 auto;
   place-items: center;
-  min-width: 35rem;
-  max-width: 35rem;
   font-weight: 500;
+  width: 40rem;
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  place-items: center;
+  scrollbar-width: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

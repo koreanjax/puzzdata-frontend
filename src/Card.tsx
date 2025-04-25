@@ -30,13 +30,14 @@ export const Card = ({id}) => {
   const [atkPlus, setAtkPlus] = useState(0)
   const [rcvPlus, setRcvPlus] = useState(0)
   
-  
+  // Initial card fetch when Card is rendered
   useEffect(() => {
     fetchCard(id).then(result => {
       setCard(CardApiToOrganized(result))
     })
   },[id])
   
+  // Once card is fetched from the DB, update values
   useEffect(() => {
     setLevel(card.maxLevel)
     setHpPlus(0)
@@ -51,48 +52,44 @@ export const Card = ({id}) => {
     })
   },[card])
 
+  // Every change to those dependencies will cause stat changes
   useEffect(() => {
     if(level > 0) {
       setStats()
     }
   },[level, hpPlus, atkPlus, rcvPlus])
 
-  // Should put these in a helper file since not really needed here
-
+  // Stat helper
   const setStats = () => {
     setHp(calcStats(level, card.maxLevel, card.limitPercent, card.hpVals, 10)+(hpPlus*10))
     setAtk(calcStats(level, card.maxLevel, card.limitPercent, card.atkVals, 5)+(atkPlus*5))
     setRcv(calcStats(level, card.maxLevel, card.limitPercent, card.rcvVals, 5)+(rcvPlus*3))
   }
 
-  // This can probably be put into helper as well, have it just return a valid level for case
-
   return (
   <div className="card">
-    <div>
-        <div key={card.id}>
-          <div>
-            <CardHeader id={card.id} name={card.name} />
-            <div className="icon-row">
-              <Icon id={card.id} />
-              <Stat hp={hp} atk={atk} rcv={rcv} />
-              <Plusses hp={hpPlus} atk={atkPlus} rcv={rcvPlus} setHpPlus={setHpPlus} setAtkPlus={setAtkPlus} setRcvPlus={setRcvPlus} />
-              <div className="level-input">
-                Level: 
-                <input className="level" value={level} onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))} />
-              </div>
+      <div key={card.id}>
+        <div>
+          <CardHeader id={card.id} name={card.name} />
+          <div className="icon-row">
+            <Icon id={card.id} />
+            <Stat hp={hp} atk={atk} rcv={rcv} />
+            <Plusses hp={hpPlus} atk={atkPlus} rcv={rcvPlus} setHpPlus={setHpPlus} setAtkPlus={setAtkPlus} setRcvPlus={setRcvPlus} />
+            <div className="level-input">
+              Level: 
+              <input className="level" value={level} onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))} />
             </div>
           </div>
-          <div>
-            <Type types={card.types}/>
-            <Awakening awkns={card.awkns} />
-            <SuperAwakening awkns={card.sAwkns} />
-            <SyncAwakening awkn={card.syncAwkn} />
-            <Skills activeName={active.name} activeText={active.text} leaderName={leader.name} leaderText={leader.text} />
-            <Keywords keywords={card.keywords} />
-          </div>
         </div>
-    </div>
+        <div>
+          <Type types={card.types}/>
+          <Awakening awkns={card.awkns} />
+          <SuperAwakening awkns={card.sAwkns} />
+          <SyncAwakening awkn={card.syncAwkn} />
+          <Skills activeName={active.name} activeText={active.text} leaderName={leader.name} leaderText={leader.text} />
+          <Keywords keywords={card.keywords} />
+        </div>
+      </div>
   </div>
   )
 }
