@@ -18,7 +18,11 @@ function App() {
         <Card id={selected} />) : (
         null
       )}
-      <SearchResults results={results} setSelected={setSelected} />
+      {results.length > 0 ? (
+        <SearchResults results={results} setSelected={setSelected} />
+      ) : (
+        null
+      )}
   </div>
   )
 }

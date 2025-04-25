@@ -1,0 +1,40 @@
+.skill-header {
+  box-sizing: border-box;
+  width:100%;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+  font-family: Tahoma;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.skill-name {
+  box-sizing: border-box;
+  font-size: 14px;
+  width:100%;
+  padding:0.5rem;
+  border-width: 0px;
+  border-bottom: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+
+.skill-text {
+  box-sizing: border-box;
+  width:100%;
+  padding:0.5rem;
+  border-width: 0px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}

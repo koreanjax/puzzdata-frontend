@@ -1,10 +1,18 @@
 .search-table {
-  padding-right: .5rem;
+  background: white;
   width: 100%;
-  border-width: 0;
+  max-height: 700px;
+  overflow: hidden;
+  overflow-y: auto;
+  border-radius: .5rem;
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .search-row {
+  box-sizing: border-box;
   padding: 0.5em;
   border-radius: .5rem;
   border: 1px solid transparent;
@@ -31,12 +39,13 @@
 
 .search-name {
   width: 100%;
-  font-family: sans-serif;
+  font-family: Tahoma;
   text-align: left;
+  text-overflow: ellipsis;
 }
 
 .search-id {
-  font-family: Tahoma;
+  font-family: Consolas,monaco,monospace;
   text-align: right;
 }
 

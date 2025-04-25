@@ -1,0 +1,12 @@
+.stats {
+  box-sizing: border-box;
+  padding: 0.25rem;
+  display: table-cell;
+  width: 150px;
+  height: calc(3 / 4 * 99px);;
+}
+
+.stat {
+  font-family: Tahoma;
+  height: 33%;
+}

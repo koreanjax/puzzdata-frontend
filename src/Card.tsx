@@ -1,13 +1,17 @@
-import { fetchCard, fetchSkill } from './api.ts'
+import { fetchCard, fetchSkill } from './api/api.ts'
 import { useState, useEffect } from 'react'
 import './Card.css'
-import img from './assets/07170.webp'
-import { emptyCardResult } from './data-interface-factory.ts'
-import { CardOrganized, emptyCardOrganized, CardApiToOrganized } from './card-organized-interface.ts'
-import { SkillOrganized, emptySkillOrganized, SkillApiToOrganized } from './skill-organized-interface.ts'
-import { Type } from './Types.tsx'
-import { Awakening, SuperAwakening, SyncAwakening } from './Awakenings.tsx'
-import { calcStats, checkLevel } from './stat-helper.ts'
+import { CardOrganized, emptyCardOrganized, CardApiToOrganized } from './models/card-organized-interface.ts'
+import { SkillOrganized, emptySkillOrganized, SkillApiToOrganized } from './models/skill-organized-interface.ts'
+import { CardHeader } from './components/CardHeader.tsx'
+import { Icon } from './components/Icon.tsx'
+import { Stat } from './components/Stat.tsx'
+import { Plusses } from './components/Plusses.tsx'
+import { Type } from './components/Types.tsx'
+import { Awakening, SuperAwakening, SyncAwakening } from './components/Awakenings.tsx'
+import { Skills } from './components/Skills.tsx'
+import { Keywords } from './components/Keywords.tsx'
+import { calcStats, checkLevel } from './helper/stat-helper.ts'
 
 export const Card = ({id}) => {
   const [card, setCard] = useState<CardOrganized>(emptyCardOrganized)
@@ -21,6 +25,10 @@ export const Card = ({id}) => {
   const [hp, setHp] = useState(0)
   const [atk, setAtk] = useState(0)
   const [rcv, setRcv] = useState(0)
+
+  const [hpPlus, setHpPlus] = useState(0)
+  const [atkPlus, setAtkPlus] = useState(0)
+  const [rcvPlus, setRcvPlus] = useState(0)
   
   
   useEffect(() => {
@@ -31,6 +39,9 @@ export const Card = ({id}) => {
   
   useEffect(() => {
     setLevel(card.maxLevel)
+    setHpPlus(0)
+    setAtkPlus(0)
+    setRcvPlus(0)
     setStats()
     fetchSkill(card.active).then(result => {
       setActive(SkillApiToOrganized(result))
@@ -44,41 +55,32 @@ export const Card = ({id}) => {
     if(level > 0) {
       setStats()
     }
-  },[level])
+  },[level, hpPlus, atkPlus, rcvPlus])
 
   // Should put these in a helper file since not really needed here
-  
 
   const setStats = () => {
-    setHp(calcStats(level, card.maxLevel, card.limitPercent, card.hpVals, 10))
-    setAtk(calcStats(level, card.maxLevel, card.limitPercent, card.atkVals, 5))
-    setRcv(calcStats(level, card.maxLevel, card.limitPercent, card.rcvVals, 5))
+    setHp(calcStats(level, card.maxLevel, card.limitPercent, card.hpVals, 10)+(hpPlus*10))
+    setAtk(calcStats(level, card.maxLevel, card.limitPercent, card.atkVals, 5)+(atkPlus*5))
+    setRcv(calcStats(level, card.maxLevel, card.limitPercent, card.rcvVals, 5)+(rcvPlus*3))
   }
 
   // This can probably be put into helper as well, have it just return a valid level for case
 
-  const Keywords = ({keywords}) => {
-    if(keywords.length === 0) {
-      return(null)
-    }
-    return (
-      <div className="keywords">
-        {keywords.map((keyword, key) => (
-          <div>{keyword}</div>
-        ))}
-      </div>
-    )
-  }
-
   return (
   <div className="card">
     <div>
-        <div key={card.id} className="card">
-          <div className="card-main">
-            <img className="card-icon" src={img} />
-            <div>
-              <div className="card-id">{card.id}</div>
-              <div className="card-name">{card.name}</div>
+        <div key={card.id}>
+          <div>
+            <CardHeader id={card.id} name={card.name} />
+            <div className="icon-row">
+              <Icon id={card.id} />
+              <Stat hp={hp} atk={atk} rcv={rcv} />
+              <Plusses hp={hpPlus} atk={atkPlus} rcv={rcvPlus} setHpPlus={setHpPlus} setAtkPlus={setAtkPlus} setRcvPlus={setRcvPlus} />
+              <div className="level-input">
+                Level: 
+                <input className="level" value={level} onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))} />
+              </div>
             </div>
           </div>
           <div>
@@ -86,19 +88,7 @@ export const Card = ({id}) => {
             <Awakening awkns={card.awkns} />
             <SuperAwakening awkns={card.sAwkns} />
             <SyncAwakening awkn={card.syncAwkn} />
-            <div className="level-input">
-              Level: 
-              <input value={level} onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))} />
-            </div>
-            <div className="stats">
-              <div>HP: {hp}</div>
-              <div>ATK: {atk}</div>
-              <div>RCV: {rcv}</div>
-            </div>
-            <div className="skills">
-              <div>{active.name}: {active.text}</div>
-              <div>{leader.name}: {leader.text}</div>
-            </div>
+            <Skills activeName={active.name} activeText={active.text} leaderName={leader.name} leaderText={leader.text} />
             <Keywords keywords={card.keywords} />
           </div>
         </div>

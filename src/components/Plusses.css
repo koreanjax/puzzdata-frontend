@@ -1,0 +1,17 @@
+.plusses {
+  align-items: center;
+  display: flex;
+  width: 40px;
+  height: calc(3 / 4 * 33px);
+}
+
+.plus {
+  align-items: center;
+  width: inherit;
+  border-width: 0px;
+  outline: 0;
+  background-color: transparent;
+  height: 100%;
+  font-size: 16px;
+  font-family: Tahoma;
+}
