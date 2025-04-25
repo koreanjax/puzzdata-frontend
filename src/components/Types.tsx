@@ -1,4 +1,4 @@
-const typesImg = Object.values(import.meta.glob('./assets/types/*.webp', { eager: true, as: 'url' }))  
+const typesImg = Object.values(import.meta.glob('../assets/types/*.webp', { eager: true, as: 'url' }))  
 
 // TODO: Add the words after icons
 export const Type = ({types}) => {

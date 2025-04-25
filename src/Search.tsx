@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import * as CI from 'react-icons/ci'
-import { fetchSearch, fetchCard } from './api.ts'
+import { fetchSearch, fetchCard } from './api/api.ts'
 import './Search.css'
 
 export const Search = ({setSearched, setResults}) => {

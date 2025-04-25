@@ -1,4 +1,4 @@
-const awknsImg = Object.values(import.meta.glob('./assets/awakenings/*.webp', { eager: true, as: 'url' }))
+const awknsImg = Object.values(import.meta.glob('../assets/awakenings/*.webp', { eager: true, as: 'url' }))
 
 export const Awakening = ({awkns}) => {
   return (

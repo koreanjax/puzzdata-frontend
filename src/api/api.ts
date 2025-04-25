@@ -1,5 +1,5 @@
-import { Input, SearchResult, CardResult, SkillResult } from './data-interface.ts'
-import { emptySearchResult, emptyCardResult, emptySkillResult } from './data-interface-factory.ts'
+import { Input, SearchResult, CardResult, SkillResult } from '../models/data-interface.ts'
+import { emptySearchResult, emptyCardResult, emptySkillResult } from '../data-interface-factory.ts'
 
 const API_URL: string = 'http://localhost:8080'
 const API_SEARCH: string = '/search/'
