@@ -1,0 +1,130 @@
+.filter {
+  z-index: 2;
+  position: absolute;
+  background: white;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
+  width:100%;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+  font-family: Tahoma;
+}
+
+.filter-title {
+  box-sizing: border-box;
+  font-size: 14px;
+  width:100%;
+  padding:0.5rem;
+  border-width: 0px;
+  border-bottom: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+
+.filter-menu {
+  display:flex;
+}
+
+.filter-search {
+  display: flex;
+  justify-content: center;
+}
+
+.filter-search-icon {
+  margin-left: auto;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: white;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5rem;
+  border-radius: .5rem;
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+
+.filter-search-icon:hover {
+  border-color: #646cff;
+}
+
+
+.awkn-header {
+  display: flex;
+}
+
+.clear-icon {
+  margin-left: auto;
+  background: white;
+  cursor: pointer;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: .5rem;
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+
+.clear-icon:hover {
+  border-color: #646cff;
+}
+
+.filter-non-awkn {
+  width: 50%;
+  padding:0.5rem;
+}
+
+.filter-awkn {
+  width: 50%;
+  padding:0.5rem;
+}
+
+.awkn-stage {
+  height: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+
+.awkn-table {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.awkn-filter {
+  padding:0.2rem;
+}
+
+.awkn-filter:hover {
+  opacity:0.6;
+  cursor: pointer;
+}
+
+.awkn-staged {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.awkn-staged:hover {
+  opacity:0.6;
+  cursor: pointer;
+}

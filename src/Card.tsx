@@ -1,5 +1,5 @@
 import { fetchCard, fetchSkill } from './api/api.ts'
-import { useState, useEffect } from 'react'
+import { useState, MutableRefObject, useEffect, useRef } from 'react'
 import './Card.css'
 import { CardOrganized, emptyCardOrganized, CardApiToOrganized } from './models/card-organized-interface.ts'
 import { SkillOrganized, emptySkillOrganized, SkillApiToOrganized } from './models/skill-organized-interface.ts'
@@ -13,37 +13,55 @@ import { Skills } from './components/Skills.tsx'
 import { Keywords } from './components/Keywords.tsx'
 import { calcStats, checkLevel } from './helper/stat-helper.ts'
 
-export const Card = ({id}) => {
+export const Card = ({id, setSelected}) => {
   const [card, setCard] = useState<CardOrganized>(emptyCardOrganized)
   const [level, setLevel] = useState(0)
   
   const [active, setActive] = useState<SkillOrganized>(emptySkillOrganized)
   const [leader, setLeader] = useState<SkillOrganized>(emptySkillOrganized)
-  const [activeString, setActiveString] = useState('')
-  const [leaderString, setLeaderString] = useState('')
+  const [activeString, setActiveString] = useState<string>('')
+  const [leaderString, setLeaderString] = useState<string>('')
 
-  const [hp, setHp] = useState(0)
-  const [atk, setAtk] = useState(0)
-  const [rcv, setRcv] = useState(0)
+  const [hp, setHp] = useState<number>(0)
+  const [atk, setAtk] = useState<number>(0)
+  const [rcv, setRcv] = useState<number>(0)
 
-  const [hpPlus, setHpPlus] = useState(0)
-  const [atkPlus, setAtkPlus] = useState(0)
-  const [rcvPlus, setRcvPlus] = useState(0)
+  const [hpPlus, setHpPlus] = useState<number>(0)
+  const [atkPlus, setAtkPlus] = useState<number>(0)
+  const [rcvPlus, setRcvPlus] = useState<number>(0)
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  }, []);
+
+  const handleClickOutside = event => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setSelected(0);
+    }
+  };
   
   // Initial card fetch when Card is rendered
   useEffect(() => {
+    setHp(0)
+    setAtk(0)
+    setRcv(0)
     fetchCard(id).then(result => {
       setCard(CardApiToOrganized(result))
+      setLevel(result.max_level)
+      setHpPlus(0)
+      setAtkPlus(0)
+      setRcvPlus(0)
     })
   },[id])
   
   // Once card is fetched from the DB, update values
   useEffect(() => {
-    setLevel(card.maxLevel)
-    setHpPlus(0)
-    setAtkPlus(0)
-    setRcvPlus(0)
-    setStats()
     fetchSkill(card.active).then(result => {
       setActive(SkillApiToOrganized(result))
     })
@@ -66,8 +84,9 @@ export const Card = ({id}) => {
     setRcv(calcStats(level, card.maxLevel, card.limitPercent, card.rcvVals, 5)+(rcvPlus*3))
   }
 
-  return (
-  <div className="card">
+
+  return (card.id > 0 &&
+  <div className="card" ref={wrapperRef}>
       <div key={card.id}>
         <div>
           <CardHeader id={card.id} name={card.name} />
@@ -76,8 +95,8 @@ export const Card = ({id}) => {
             <Stat hp={hp} atk={atk} rcv={rcv} />
             <Plusses hp={hpPlus} atk={atkPlus} rcv={rcvPlus} setHpPlus={setHpPlus} setAtkPlus={setAtkPlus} setRcvPlus={setRcvPlus} />
             <div className="level-input">
-              Level: 
-              <input className="level" value={level} onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))} />
+              <label htmlFor="level">Level: </label>
+              <input id="level" className="level" value={level} onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))} />
             </div>
           </div>
         </div>

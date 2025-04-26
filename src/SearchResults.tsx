@@ -21,11 +21,11 @@ export const SearchResults = ({results, setSelected}) => {
   return(
     <div className="search-table">
       {results.map(result => (
-        <div key={result.id} className="search-row" onClick={() => handleClick(result.id)}>
+        <button key={result.id} className="search-row" onClick={() => handleClick(result.id)}>
           <img className="table-cell search-icon" src={imgUrl(result.id)} />
           <div className="table-cell search-name text-sm">{result.name}</div>
           <div className="table-cell search-id text-sm">{realId(result.id)}</div>
-        </div>
+        </button>
       ))}
     </div>
   )
