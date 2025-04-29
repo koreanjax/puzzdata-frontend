@@ -1,5 +1,5 @@
 export interface SkillOrganized {
-  id: number;
+  skillId: number;
   name: string;
   text: string;
   skillType: number;
@@ -10,7 +10,7 @@ export interface SkillOrganized {
 }
 
 export const emptySkillOrganized = () => ({
-  id: 0,
+  skillId: 0,
   name: '',
   text: '',
   skillType: -1,
@@ -30,7 +30,7 @@ const checkStringAndSplitToNum = (str: string, delimiter: string): number[] => {
 
 export const SkillApiToOrganized = (result: SkillResult): SkillOrganized => {
   let organized: SkillOrganized = {
-    id: result.id,
+    skillId: result.id,
     name: result.name,
     text: result.text,
     skillType: result.skill_type,

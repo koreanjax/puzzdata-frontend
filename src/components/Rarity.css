@@ -1,0 +1,38 @@
+.rarity-grid {
+  display: grid;
+  grid-template-columns: 15% 15% 15% 15% 15%;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.rarity-button {
+  display: flex;
+  opacity: 0.5;
+  padding: 0.5rem;
+  align-items: center;
+  background: transparent;
+  border-width: 0;
+}
+
+.rarity-button:hover {
+  cursor: pointer;
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.rarity-button-active {
+  filter: grayscale(0%);
+  -webkit-filter: drop-shadow(0 0 5px #222);
+  opacity: 1;
+}
+
+.rarity-button-active:hover {
+  filter: grayscale(0%);
+  -webkit-filter: drop-shadow(0 0 5px #222);
+  opacity: 1;
+}
+
+label {
+  pointer-events: none;
+}

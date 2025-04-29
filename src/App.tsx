@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { SearchResult } from './data-interface.ts'
 import './App.css'
-import { Search } from './Search.tsx'
-import { SearchResults } from './SearchResults.tsx'
+import { SearchBar } from './SearchBar.tsx'
+import SearchResults from './SearchResults.tsx'
 import { Card } from './Card.tsx'
 import { Filter } from './Filter.tsx'
 
@@ -14,6 +14,9 @@ function App() {
   const [showFilter, setShowFilter] = useState(false)
 
   useEffect(() => {
+    if(selected > 0) {
+      window.scrollTo(0, 0)
+    }
     const handleKeyPressed = (event) => {
       if(selected > 0 && event.key === 'Escape') {
         setSelected(0)
@@ -26,13 +29,15 @@ function App() {
 
   return (
   <div className="App">
-      <Search setResults={setResults} setSelected={setSelected} showFilter={showFilter} setShowFilter={setShowFilter}/>
+      <SearchBar setResults={setResults} setSelected={setSelected} showFilter={showFilter} setShowFilter={setShowFilter}/>
       <Filter className="filter" showFilter={showFilter} setShowFilter={setShowFilter} setResults={setResults} />
       {selected > 0 && (
         <Card className="card" id={selected} setSelected={setSelected} />
       )}
       {results.length > 0 && (
-        <SearchResults className="search" results={results} setSelected={setSelected} />
+      <div className="search-results">
+        <SearchResults  results={results} setSelected={setSelected} />
+      </div>
       )}
   </div>
   )

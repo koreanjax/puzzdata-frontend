@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import * as CI from 'react-icons/ci'
 import { fetchSearch, fetchCard } from './api/api.ts'
-import './Search.css'
+import './SearchBar.css'
 
-export const Search = ({setSearched, setResults, setSelected, showFilter, setShowFilter}) => {
+const SEARCH_PLACEHOLDER: string = 'Search Monsters..'
+
+export const SearchBar = ({setSearched, setResults, setSelected, showFilter, setShowFilter}) => {
   const [search, setSearch] = useState('')
   
   // Easier to use rather than onSubmit with a button?
@@ -25,7 +27,11 @@ export const Search = ({setSearched, setResults, setSelected, showFilter, setSho
       <div className="search">
         <CI.CiSearch size={24}/>
         <form className="search-form" onSubmit={handleSubmit}>
-          <input id="search" className="search-input" value={search} placeholder="Search Monsters.." onChange={e => setSearch(e.target.value)} />
+          <input id="search"
+            className="search-input"
+            value={search}
+            placeholder={SEARCH_PLACEHOLDER}
+            onChange={e => setSearch(e.target.value)} />
         </form>
       </div>
       <button className="filter-icon" onClick={handleClick} >

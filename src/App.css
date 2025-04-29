@@ -1,6 +1,26 @@
 .App {
   position: relative;
-  height: 90vh;
+  height: 95vh;
+  width: 100%;
+}
+
+@media (min-width: 700px) {
+  .App {
+    width: 40rem;
+  }
+}
+
+img {
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -khtml-user-drag: none;
+  -khtml-user-select: none;
+  -moz-user-drag: none;
+  -moz-user-select: none;
+  -o-user-drag: none;
+  -o-user-select: none;
+  user-drag: none;
+  user-select: none;
 }
 
 .filter + .card {
@@ -15,7 +35,7 @@
   user-select: none;
 }
 
-.filter + .search-table {
+.filter + .search-results {
   filter: blur(10px);
   pointer-events: none;
   -webkit-touch-callout: none;
@@ -27,7 +47,7 @@
   user-select: none;
 }
 
-.card + .search-table {
+.card + .search-results {
   filter: blur(10px);
   pointer-events: none;
   -webkit-touch-callout: none;

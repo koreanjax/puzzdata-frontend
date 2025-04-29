@@ -34,9 +34,9 @@ export const Card = ({id, setSelected}) => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, false);
+    document.addEventListener("mousedown", handleClickOutside, false);
     return () => {
-      document.removeEventListener("click", handleClickOutside, false);
+      document.removeEventListener("mousedown", handleClickOutside, false);
     };
   }, []);
 
@@ -54,9 +54,9 @@ export const Card = ({id, setSelected}) => {
     fetchCard(id).then(result => {
       setCard(CardApiToOrganized(result))
       setLevel(result.max_level)
-      setHpPlus(0)
-      setAtkPlus(0)
-      setRcvPlus(0)
+      setHpPlus(99)
+      setAtkPlus(99)
+      setRcvPlus(99)
     })
   },[id])
   
@@ -84,14 +84,13 @@ export const Card = ({id, setSelected}) => {
     setRcv(calcStats(level, card.maxLevel, card.limitPercent, card.rcvVals, 5)+(rcvPlus*3))
   }
 
-
-  return (card.id > 0 &&
+  return (card.monsterId > 0 &&
   <div className="card" ref={wrapperRef}>
-      <div key={card.id}>
+      <div key={card.monsterId}>
         <div>
-          <CardHeader id={card.id} name={card.name} />
+          <CardHeader id={card.monsterId} name={card.name} />
           <div className="icon-row">
-            <Icon id={card.id} />
+            <Icon id={card.monsterId} />
             <Stat hp={hp} atk={atk} rcv={rcv} />
             <Plusses hp={hpPlus} atk={atkPlus} rcv={rcvPlus} setHpPlus={setHpPlus} setAtkPlus={setAtkPlus} setRcvPlus={setRcvPlus} />
             <div className="level-input">

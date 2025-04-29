@@ -1,14 +1,13 @@
 import { Input, SearchResult, CardResult, SkillResult } from '../models/data-interface.ts'
 import { emptySearchResult, emptyCardResult, emptySkillResult } from '../data-interface-factory.ts'
 
-const API_URL: string = 'http://localhost:8080'
+const API_URL: string = 'http://10.0.0.205:8080'
 const API_SEARCH: string = '/search/'
 const API_CARD: string = '/card/'
 const API_SKILL: string = '/skill/'
-const API_AWAKENING_BASE: string = '/awakening/'
+const API_FILTER: string = '/filter/'
 const API_KEY_ID: string = 'id='
 const API_KEY_NAME: string = 'name='
-const API_KEY_AWKNS: string = 'awkns='
 
 export const fetchSearch = async (search): SearchResult[] => {
   let data: SearchResult[] = []
@@ -36,7 +35,6 @@ export const fetchCard = async (search: number): CardResult => {
   let data: CardResult = emptyCardResult()
   try {
     let queryString: string = API_URL + API_CARD + API_KEY_ID + search
-
     const response = await fetch(queryString)
 
     if (!response.ok) {
@@ -66,10 +64,10 @@ export const fetchSkill = async (search: number): SkillResult => {
   return(data)
 }
 
-export const fetchAwakeningBase = async (filterString: string): SearchResult[] => {
+export const fetchFilter = async (filterString: string): SearchResult[] => {
   let data: CardResult = emptySkillResult()
   try {
-    let queryString: string = API_URL + API_AWAKENING_BASE + API_KEY_AWKNS + filterString
+    let queryString: string = API_URL + API_FILTER + filterString
 
     console.log(queryString)
     const response = await fetch(queryString)

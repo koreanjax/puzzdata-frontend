@@ -1,5 +1,5 @@
 export interface CardOrganized {
-  id: number;
+  monster_id: number;
   name: string;
   attrs: number[];
   types: number[];
@@ -32,7 +32,7 @@ export interface CardOrganized {
 }
 
 export const emptyCardOrganized = () => ({
-  id: -1,
+  monster_id: -1,
   name: '',
   atrs: [],
   types: [],
@@ -88,7 +88,7 @@ const checkStringAndSplitToNum = (str: string, delimiter: string): number[] => {
 
 export const CardApiToOrganized = (result: CardResult): CardOrganized => {
   let organized: CardOrganized = {
-    id: result.id,
+    monsterId: result.monster_id,
     name: result.name,
     attrs: checkStringAndSplitToNum(result.attrs, '|'),
     types: checkStringAndSplitToNum(result.types, '|'),

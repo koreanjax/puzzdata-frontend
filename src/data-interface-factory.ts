@@ -1,12 +1,12 @@
 import { SearchResult, CardResult, SkillResult }  from './data-interface.ts'
 
 export const emptySearchResult = (): SearchResult => ({
-  id: -1,
+  monsterId: -1,
   name: ''
 })
 
 export const emptyCardResult = (): CardResult => ({
-  id: -1,
+  monsterId: -1,
   name: '',
   attrs: '',
   types: '',
@@ -41,7 +41,7 @@ export const emptyCardResult = (): CardResult => ({
 })
 
 export const emptySkillResult = (): SkillResult => ({
-  id: 0,
+  skillId: 0,
   name: '',
   text: '',
   skillType: -1,

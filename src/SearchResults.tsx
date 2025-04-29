@@ -1,32 +1,36 @@
 import './SearchResults.css'
-import img from './assets/07170.webp'
+import { memo } from 'React'
+import { realId } from './helper/general-helper.ts'
+import { urlIcon } from './helper/icon-helper.ts'
 
-export const SearchResults = ({results, setSelected}) => {
-  
-  const realId = (id: number): number => {
-    const realId: number = (id > 9899) ? id - 100 : id
-    return realId
-  }
-
-  const imgUrl = (id: number): string => {
-    const fileName: string = realId(id).toString().padStart(5, "0")
-    const imgSrc: string = "https://dohzi9dodqiuu.cloudfront.net/icons/" + fileName + ".png"
-    return imgSrc
-  }
-
+const SearchResults = ({results, setSelected}) => {
   const handleClick = (id) => {
     setSelected(id)
   }
 
-  return(
-    <div className="search-table">
-      {results.map(result => (
-        <button key={result.id} className="search-row" onClick={() => handleClick(result.id)}>
-          <img className="table-cell search-icon" src={imgUrl(result.id)} />
+  const ResultsTable = () => {
+    return(
+      results.map(result => (
+        <ResultsRow key={result.monster_id} result={result}/>
+      ))
+    )
+  }
+
+  const ResultsRow = ({result}) => {
+    return(
+        <button className="search-row" onClick={() => handleClick(result.monster_id)}>
+          <img className="table-cell search-icon" src={urlIcon(result.monster_id)} />
           <div className="table-cell search-name text-sm">{result.name}</div>
-          <div className="table-cell search-id text-sm">{realId(result.id)}</div>
+          <div className="table-cell search-id text-sm">{realId(result.monster_id)}</div>
         </button>
-      ))}
+    )
+  }
+
+  return(
+    <div className="search-results-table">
+      <ResultsTable />
     </div>
   )
 }
+
+export default memo(SearchResults)

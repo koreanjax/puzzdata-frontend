@@ -9,14 +9,6 @@ export const checkLevel = (newLevel: number, maxLevel:number, limitPercent: numb
   }
 }
 
-export const checkPlus = (newPlus: number): number => {
-  if(newPlus > 99) {
-    return(99)
-  } else {
-    return(newPlus)
-  }
-}
-
 // There are different ways of calculating stats depending on level range
 // 1-99 use the stat growth value into consideration
 // 100-110 use the limit break percent which is divided evenly

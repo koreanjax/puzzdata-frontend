@@ -3,12 +3,12 @@ export interface Input {
 }
 
 export interface SearchResult {
-  id: number;
+  monster_id: number;
   name: string;
 }
 
 export interface CardResult {
-  id: number;
+  monster_id: number;
   name: string;
   attrs: string;
   types: string;
@@ -44,7 +44,7 @@ export interface CardResult {
 }
 
 export interface SkillResult {
-  id: number;
+  skil_id: number;
   name: string;
   text: string;
   skill_type: number;

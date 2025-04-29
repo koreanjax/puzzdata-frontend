@@ -1,14 +1,21 @@
 :root {
-  margin:0 auto;
   place-items: center;
+  padding: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
   font-weight: 500;
-  width: 40rem;
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  box-sizing: border-box;
   place-items: center;
   scrollbar-width: none;
+  touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, sans-serif, Tahoma, Consolas, monaco, monospace;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
 }
