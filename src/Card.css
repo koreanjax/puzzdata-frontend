@@ -37,6 +37,7 @@
 
 .icon-row {
   display: flex;
+  padding-bottom: 0.5rem;
 }
 
 .card-sm {

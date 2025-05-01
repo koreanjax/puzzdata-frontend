@@ -8,12 +8,12 @@ export const CardHeader = ({id, name, rarity, setSelected}) => {
 
   const numberAndRarity = []
 
-  numberAndRarity.push(<div className="card-id">No.{realId}</div>)
-  console.log(rarity)
+  numberAndRarity.push(<div key={0} className="card-id">No.{realId}</div>)
+
   for (let i = 0; i < rarity; i++) {
-    numberAndRarity.push(<CI.CiStar size={20}/>)
+    numberAndRarity.push(<CI.CiStar key={i+1} size={20}/>)
   }
-  numberAndRarity.push(<div> / {rarity}</div>)
+  numberAndRarity.push(<div key={rarity+2}> / {rarity}</div>)
 
   const handleClose = () => {
     setSelected(0)

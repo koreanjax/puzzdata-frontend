@@ -72,9 +72,7 @@ export const Card = ({id, setSelected}) => {
 
   // Every change to those dependencies will cause stat changes
   useEffect(() => {
-    if(level > 0) {
-      setStats()
-    }
+    setStats()
   },[level, hpPlus, atkPlus, rcvPlus])
 
   // Stat helper
@@ -99,6 +97,7 @@ export const Card = ({id, setSelected}) => {
               <label htmlFor="level">Level: </label>
               <input id="level"
                 className="level-input"
+                autocomplete="off"
                 value={level}
                 onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))}
                 type="text"

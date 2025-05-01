@@ -6,13 +6,7 @@ export const SkillTextWithIcon = ({skill}) => {
   }
   const skillText = skill.split(/\{.*?\}/g)
   const skillIcon = skill.match(/\{.*?\}/g)
-
   const skillParts = []
-
-  console.log(skill)
-  console.log(skillText)
-  console.log(skillIcon)
-
   const textToIcon = (text: string) => {
     const curlyRemoved = text.replace(/\{(.*?)\}/, "$1")
     const leftBracketReplaced = curlyRemoved.replace("[", "%5B")
@@ -20,7 +14,7 @@ export const SkillTextWithIcon = ({skill}) => {
     const spaceReplaced = rightBracketReplaced.replaceAll(" ", "%20")
     const pngAdded = spaceReplaced + ".png"
     for (const [i, value] of skillsImg.entries()) {
-      console.log(pngAdded)
+
       if(value.includes(pngAdded)) {
         return(value)
       }
@@ -33,10 +27,10 @@ export const SkillTextWithIcon = ({skill}) => {
   const longerLength = skillTextLength > skillIconLength ? skillTextLength : skillIconLength
   for (let i = 0; i < longerLength; i++) {
     if(i < skillTextLength && skillText[i].length > 0) {
-      skillParts.push(<span className="skill-text-test">{skillText[i]}</span>)
+      skillParts.push(<span key={skillParts.length} className="skill-text-test">{skillText[i]}</span>)
     }
     if(i < skillIconLength) {
-      skillParts.push(<span className="skill-icon-span"><img className="skill-icon" src={textToIcon(skillIcon[i])}/></span>)
+      skillParts.push(<span key={skillParts.length} className="skill-icon-span"><img className="skill-icon" src={textToIcon(skillIcon[i])}/></span>)
     }
   }
 
