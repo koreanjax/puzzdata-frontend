@@ -4,8 +4,6 @@
   border-radius: 0.5rem;
   border-width: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .skills {
@@ -24,17 +22,31 @@
   border-width: 0px;
   border-bottom: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .skill-text {
-  box-sizing: border-box;
-  overflow-wrap: normal;
-  width:100%;
+  display: inline-block;
   padding:0.5rem;
   border-width: 0px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
+}
+
+.skill-text-test {
+  vertical-align:middle;
+  overflow-wrap: normal;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.skill-icon {
+  vertical-align:middle;
+  height: 34px;
+}
+
+.skill-text-test + .skill-icon-span {
+  padding-left: 0.25rem;
+}
+
+.skill-icon-span + .skill-text-test {
+  padding-left: 0.25rem;
 }

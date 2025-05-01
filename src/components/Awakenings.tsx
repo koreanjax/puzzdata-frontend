@@ -1,5 +1,5 @@
-const awknsImg = Object.values(import.meta.glob('../assets/awakenings/*.webp', { eager: true, as: 'url' }))
-const filterAwknsImg = Object.values(import.meta.glob('../assets/filter/awakenings/*.webp', { eager: true, as: 'url' }))
+const awknsImg = Object.values(import.meta.glob('../assets/awakenings/*.png', { eager: true, as: 'url' }))
+const filterAwknsImg = Object.values(import.meta.glob('../assets/filter/awakenings/*.png', { eager: true, as: 'url' }))
 
 // Lay out the table of awakenings to choose from
 // in the filter menu

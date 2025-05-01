@@ -1,14 +1,14 @@
 :root {
   place-items: center;
-  padding: 0.5rem;
-  overflow-x: hidden;
-  overflow-y: scroll;
   font-weight: 500;
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   place-items: center;
+  display: flex;
+  justify-content: center;
   scrollbar-width: none;
+  overscroll-behavior-y: none;
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

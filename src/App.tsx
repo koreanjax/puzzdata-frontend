@@ -14,6 +14,10 @@ function App() {
   const [showFilter, setShowFilter] = useState(false)
 
   useEffect(() => {
+    document.getElementById("root").scrollIntoView();
+  }, [])
+
+  useEffect(() => {
     if(selected > 0) {
       window.scrollTo(0, 0)
     }
@@ -30,15 +34,15 @@ function App() {
   return (
   <div className="App">
       <SearchBar setResults={setResults} setSelected={setSelected} showFilter={showFilter} setShowFilter={setShowFilter}/>
-      <Filter className="filter" showFilter={showFilter} setShowFilter={setShowFilter} setResults={setResults} />
+      <Filter className="filter" showFilter={showFilter} setShowFilter={setShowFilter} setResults={setResults} setSelected={setSelected}/>
       {selected > 0 && (
         <Card className="card" id={selected} setSelected={setSelected} />
       )}
-      {results.length > 0 && (
       <div className="search-results">
+        {results.length > 0 && (
         <SearchResults  results={results} setSelected={setSelected} />
+        )}
       </div>
-      )}
   </div>
   )
 }

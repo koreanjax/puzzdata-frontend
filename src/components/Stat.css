@@ -1,11 +1,12 @@
 .stats {
-  box-sizing: border-box;
-  padding: 0.25rem;
-  display: table-cell;
-  width: 150px;
-  height: calc(3 / 4 * 99px);;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  width: 100px;
+  height: calc(3 / 4 * 99px);
 }
 
 .stat {
+  display: flex;
+  align-items: center;
   height: 33%;
 }

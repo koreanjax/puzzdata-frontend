@@ -51,7 +51,6 @@ export const fetchSkill = async (search: number): SkillResult => {
   let data: CardResult = emptySkillResult()
   try {
     let queryString: string = API_URL + API_SKILL + API_KEY_ID + search
-
     const response = await fetch(queryString)
 
     if (!response.ok) {

@@ -7,23 +7,34 @@
 }
 
 .card-header {
-  box-sizing: border-box;
   width: 100%;
-  align-items: center;
   display: flex;
 }
 
+.card-id-name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .card-name {
-  box-sizing: border-box;
-  width: calc(100% - calc(3 / 4 * 98px));
-  padding: 0.25rem;
   text-align: left;
+  padding: 0.5rem;
+}
+
+.card-id-rarity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
 }
 
 .card-id {
-  padding-top:0.25rem;
-  padding-bottom:0.25rem;
-  box-sizing: border-box;  
-  width: calc(3 / 4 * 98px);
-  text-align: center;
+  flex: 1;
+}
+
+.card-close {
+  padding-left: 0.5rem;
+  cursor: pointer;
 }

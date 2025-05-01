@@ -1,5 +1,5 @@
 import './SearchResults.css'
-import { memo } from 'React'
+import { memo, useEffect } from 'React'
 import { realId } from './helper/general-helper.ts'
 import { urlIcon } from './helper/icon-helper.ts'
 
@@ -18,16 +18,16 @@ const SearchResults = ({results, setSelected}) => {
 
   const ResultsRow = ({result}) => {
     return(
-        <button className="search-row" onClick={() => handleClick(result.monster_id)}>
+        <div className="search-row" onClick={() => handleClick(result.monster_id)}>
           <img className="table-cell search-icon" src={urlIcon(result.monster_id)} />
           <div className="table-cell search-name text-sm">{result.name}</div>
           <div className="table-cell search-id text-sm">{realId(result.monster_id)}</div>
-        </button>
+        </div>
     )
   }
 
   return(
-    <div className="search-results-table">
+    <div id="search-results-table" className="search-results-table">
       <ResultsTable />
     </div>
   )

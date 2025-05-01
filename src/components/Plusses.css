@@ -1,12 +1,17 @@
 .plusses {
   align-items: center;
-  display: flex;
-  width: 40px;
+  height: calc(3 / 4 * 99px);;
 }
 
 .plus {
+  display: flex;
   align-items: center;
-  width: inherit;
+  height: 33%;
+}
+
+.plus-input {
+  width: 40px;
+  height: 100%;
   border-width: 0px;
   outline: 0;
   background-color: transparent;

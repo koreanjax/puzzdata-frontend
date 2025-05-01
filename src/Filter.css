@@ -1,16 +1,13 @@
 .filter {
-  background: white;
   width: 100%;
   z-index: 2;
-  position: absolute;
+  position: relative;
   margin-top: 0.5rem;
   padding: 0.5rem;
   box-sizing: border-box;
   border-radius: 0.5rem;
   border-width: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .filter-title {
@@ -20,8 +17,6 @@
   border-width: 0px;
   border-bottom: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .filter-info-header {
@@ -45,8 +40,6 @@
   border-radius: 0.5rem;
   border-width: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .awkn-staged {
@@ -69,8 +62,6 @@
   border-radius: .5rem;
   border-width: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .awkn-header {
@@ -87,17 +78,16 @@
 }
 
 .clear-icon {
+  background: transparent;
   margin-left: auto;
   cursor: pointer;
-  width: 40px;
+  width: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: .5rem;
   border-width: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .awkn-filter {

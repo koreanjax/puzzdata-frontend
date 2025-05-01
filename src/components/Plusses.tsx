@@ -1,41 +1,39 @@
 import './Plusses.css'
+import { checkPlus } from '../helper/stat-helper.ts'
 
 export const Plusses = ({hp, atk, rcv, setHpPlus, setAtkPlus, setRcvPlus}) => {
-  const checkPlus = (newPlus: string): number => {
-    const filtered = newPlus.replace(/[e\+\-]/gi, "")
-    setHpPlus(filtered)
-    if(filtered > 99) {
-      return(99)
-    } else {
-      return(filtered)
-    }
-  }
-
-  const handlePlus = ({value, setPlus}) => {
-    console.log(value)
-    const plusFilter: number = parseInt(value.replace(/[e\+\-]/gi, ""))
-    setHpPlus(plusFilter)
-  }
-
+  // Break down each plus into a component and reuse?
   return(
-  	<div>
-      <div className="plusses">
+  	<div className="plusses">
+      <div className="plus">
         <label htmlFor="hp">+</label>
         <input id="hp"
-          className="plus"
+          className="plus-input"
           value={hp}
           onChange={e => setHpPlus(checkPlus(e.target.value))}
-          type="number"
-          inputmode="numeric"
+          type="text"
+          inputMode="numeric"
         />
       </div>
-      <div className="plusses">
+      <div className="plus">
         <label htmlFor="atk">+</label>
-        <input id="atk" className="plus" value={atk} onChange={e => setAtkPlus(checkPlus(e.target.value))} />
+        <input id="atk"
+          className="plus-input"
+          value={atk}
+          onChange={e => setAtkPlus(checkPlus(e.target.value))}
+          type="text"
+          inputMode="numeric"
+        />
       </div>
-      <div className="plusses">
+      <div className="plus">
         <label htmlFor="rcv">+</label>
-        <input id="rcv" className="plus" value={rcv} onChange={e => setRcvPlus(checkPlus(e.target.value))} />
+        <input id="rcv"
+          className="plus-input"
+          value={rcv}
+          onChange={e => setRcvPlus(checkPlus(e.target.value))} 
+          type="text"
+          inputMode="numeric"
+        />
       </div>
     </div>
   )

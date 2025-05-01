@@ -18,15 +18,14 @@ export const Rarity = ({rarityActive, setRarityActive}) => {
     const classes:string = "rarity-button "
 
   	for (let index: nubmer = 0; index < MAX_RARITY; index++) {
-      const numRarity: string = 'x' + (index+1).toString()
+      const numRarity: string = (index+1).toString()
   	  grid.push(
-  	  	<button key={index}
+  	  	<div key={index}
           className={rarityActive[index] ? classes + "rarity-button-active" : classes + "rarity-button-inactive"}
           onClick={() => handleRarity(index)}
         >
-          <CI.CiStar size={24} />
   	  	  {numRarity}
-  	  	</button>
+  	  	</div>
   	  	)
   	}
     return(grid)

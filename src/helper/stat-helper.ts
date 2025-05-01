@@ -1,11 +1,26 @@
 // TODO: restrict non-number chars in the input box
-export const checkLevel = (newLevel: number, maxLevel:number, limitPercent: number): number => {
-  if(newLevel > 120 && limitPercent > 0) {
+export const checkLevel = (newLevel: string, maxLevel:number, limitPercent: number): number => {
+  const filtered = newLevel.replace(/\D/g, "").toString()
+  if(filtered > 120 && limitPercent > 0) {
     return(120)
-  } else if (newLevel > maxLevel && limitPercent === 0) {
+  } else if (filtered > maxLevel && limitPercent === 0) {
     return(maxLevel)
+  } else if (filtered === "") {
+    return(1)
   } else {
-    return(newLevel)
+    return(filtered)
+  }
+}
+
+
+export const checkPlus = (newPlus: string): number => {
+  const filtered = newPlus.replace(/\D/g, "").toString()
+  if(filtered > 99) {
+    return(99)
+  } else if (filtered === "") {
+    return(0)
+  } else {
+    return(Number(filtered))
   }
 }
 

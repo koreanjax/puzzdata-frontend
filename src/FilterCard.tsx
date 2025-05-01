@@ -1,14 +1,11 @@
-import './Filter.css'
+import { useState, memo } from 'React'
 import * as CI from 'react-icons/ci'
-import { useState } from 'React'
-import { fetchFilter } from './api/api.ts'
 import { Attributes } from './components/Attributes.tsx'
 import { Types } from './components/Types.tsx'
 import { Rarity } from './components/Rarity.tsx'
 import { FilterAwakening, FilterAwakenings } from './components/Awakenings.tsx'
 
-const maxStage: number = 10
-
+const STAGE_MAX: number = 10
 const MAIN_ATTRIBUTE: string = 'Main Attribute'
 const SUB_ATTRIBUTE: string = 'Sub Attribute'
 const THIRD_ATTRIBUTE: string = 'Third Attribute'
@@ -20,7 +17,7 @@ const QUERY_RARITY_BASE: string = 'rarity='
 const QUERY_COST_BASE: string = 'cost='
 const QUERY_AWKN_BASE: string = 'awkns='
 
-export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) => {
+const FilterCard = ({setFilterCardQuery}) => {
   const [awknStage, setAwknStage] = useState({})
   const [attrMainActive, setAttrMainActive] = useState<boolean[]>(Array(6).fill(false))
   const [attrSubActive, setAttrSubActive] = useState<boolean[]>(Array(6).fill(false))
@@ -29,7 +26,7 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
   const [rarityActive, setRarityActive] = useState<boolean[]>(Array(10).fill(false))
 
   const isStageFull = (newAwkn: number) : boolean => {
-    if (Object.keys(awknStage).length >= maxStage) {
+    if (Object.keys(awknStage).length >= STAGE_MAX) {
       if (awknStage[newAwkn] === undefined) {
         return(true)
       }
@@ -84,20 +81,6 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
     }
   }
 
-  const addTypeFilter = (activeFilters) => {
-    if(arrayAllEqual(activeFilters)) {
-      return('-1')
-    } else {
-      const filters: string = []  
-      activeFilters.map((active, index) => {
-        if(active) {
-          filters.push(index)
-        }
-      })
-      return(filters.join(','))
-    }
-  }
-
   const queryAttributes = () => {
     const attrs: string[] = []
     attrs.push(addFilters(attrMainActive))
@@ -108,7 +91,8 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
 
   const queryTypes = () => {
     const types: string[] = []
-    return(QUERY_TYPE_BASE+(addTypeFilter(typeActive)))
+    types.push(addFilters(typeActive))
+    return(QUERY_TYPE_BASE+types.join('|'))
   }
 
   const queryRarity = () => {
@@ -127,25 +111,8 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
     return (QUERY_AWKN_BASE+awknQuery)
   }
 
-  const handleSearch = () => {
-    const queryItems = []
-    queryItems.push(queryAttributes())
-    queryItems.push(queryTypes())
-    queryItems.push(queryRarity())
-    queryItems.push(queryAwakenings())
-    
-    const filterQuery = SETTINGS + queryItems.join('&')
-    fetchFilter(filterQuery).then(results => {
-      console.log(filterQuery)
-      setResults(results)
-      setShowFilter(!showFilter)
-      setSelected(0)
-    })
-  }
-
-  return(showFilter ? (
-    <div className="filter">
-    	<div className="filter-title">Filtering Options</div>
+  return(
+    <>
       <div className="filter-menu">
         <div className="filter-column">
           <div className="filter-info-header">
@@ -160,9 +127,9 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
         <div className="filter-column">
           <div className="awkn-header">
             Awakenings
-            <div className="clear-icon" onClick={handleClear} >
+            <button className="clear-icon" onClick={handleClear} >
               <CI.CiEraser size={14}/>
-            </div>
+            </button>
           </div>
           <div className="filter-awkn-settings">
             <div className="awkn-stage">
@@ -177,15 +144,8 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
           </div>
         </div>
       </div>
-      <div className="filter-search">
-        <button className="filter-search-icon" onClick={handleSearch} >
-          <CI.CiSearch size={30}/>
-        </button>
-      </div>
-    </div>
-    ) : (
-      null
-    )
+    </>
   )
 }
 
+export default memo(FilterCard)

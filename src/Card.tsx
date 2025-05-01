@@ -33,18 +33,18 @@ export const Card = ({id, setSelected}) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside, false);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside, false);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside, false)
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside, false)
+  //   }
+  // }, [])
 
-  const handleClickOutside = event => {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      setSelected(0);
-    }
-  };
+  // const handleClickOutside = event => {
+  //   if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+  //     setSelected(0)
+  //   }
+  // }
   
   // Initial card fetch when Card is rendered
   useEffect(() => {
@@ -88,14 +88,22 @@ export const Card = ({id, setSelected}) => {
   <div className="card" ref={wrapperRef}>
       <div key={card.monsterId}>
         <div>
-          <CardHeader id={card.monsterId} name={card.name} />
+          <div>
+            <CardHeader id={card.monsterId} name={card.name} setSelected={setSelected} rarity={card.rarity}/>
+          </div>
           <div className="icon-row">
             <Icon id={card.monsterId} />
             <Stat hp={hp} atk={atk} rcv={rcv} />
             <Plusses hp={hpPlus} atk={atkPlus} rcv={rcvPlus} setHpPlus={setHpPlus} setAtkPlus={setAtkPlus} setRcvPlus={setRcvPlus} />
-            <div className="level-input">
+            <div className="level">
               <label htmlFor="level">Level: </label>
-              <input id="level" className="level" value={level} onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))} />
+              <input id="level"
+                className="level-input"
+                value={level}
+                onChange={e => setLevel(checkLevel(e.target.value, card.maxLevel, card.limitPercent))}
+                type="text"
+                inputMode="numeric"
+              />
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ export interface CardOrganized {
   name: string;
   attrs: number[];
   types: number[];
+  rarity: number;
   cost: number;
   ultEvo: number;
   maxLevel: number;
@@ -36,6 +37,7 @@ export const emptyCardOrganized = () => ({
   name: '',
   atrs: [],
   types: [],
+  rarity: 0,
   cost: -1,
   ultEvo: -1,
   maxLevel: -1,
@@ -92,6 +94,7 @@ export const CardApiToOrganized = (result: CardResult): CardOrganized => {
     name: result.name,
     attrs: checkStringAndSplitToNum(result.attrs, '|'),
     types: checkStringAndSplitToNum(result.types, '|'),
+    rarity: result.rarity,
     cost: result.cost,
     ultEvo: result.ult_evo,
     maxLevel: result.max_level,

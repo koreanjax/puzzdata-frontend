@@ -30,13 +30,14 @@ export const SearchBar = ({setSearched, setResults, setSelected, showFilter, set
           <input id="search"
             className="search-input"
             value={search}
+            autoComplete="off"
             placeholder={SEARCH_PLACEHOLDER}
             onChange={e => setSearch(e.target.value)} />
         </form>
       </div>
-      <button className="filter-icon" onClick={handleClick} >
+      <div className="filter-icon" onClick={handleClick} >
         <CI.CiFilter size={24}/>
-      </button>
+      </div>
     </div>
   )
 }

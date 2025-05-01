@@ -7,9 +7,10 @@
 }
 
 .card {
-  position: absolute;
+  position: relative;
+  overflow-y: scroll;
+  scrollbar-width: none;
   z-index: 1;
-  background: white;
   margin-top: 0.5rem;
   box-sizing: border-box;
   width:100%;
@@ -17,25 +18,21 @@
   border-radius: 0.5rem;
   border-width: 1px;
   border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(212 212 216 / var(--tw-border-opacity));
 }
 
 .level-input {
-  width: 250px;
-  padding-top: 0.25rem;
-  padding-left: 0.25rem;
-  font-size: 16px;
-}
-
-.level {
-  align-items: center;
-  width: 30px;
+  width: 60px;
   border-width: 0px;
   outline: 0;
   background-color: transparent;
   box-sizing: border-box;
   font-size: 16px;
+}
+
+.level {
+  height: calc(3 / 4 * 33px);
+  display: flex;
+  align-items: center;
 }
 
 .icon-row {

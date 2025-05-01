@@ -7,30 +7,52 @@
 }
 
 .rarity-button {
+  margin-bottom: 0.5rem;
   display: flex;
   opacity: 0.5;
   padding: 0.5rem;
   align-items: center;
+  justify-content: center;
   background: transparent;
-  border-width: 0;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
 }
 
-.rarity-button:hover {
-  cursor: pointer;
-  filter: grayscale(0%);
-  opacity: 1;
+@media (min-width: 700px) { 
+  .rarity-button:hover {
+    cursor: pointer;
+    filter: grayscale(0%);
+    opacity: 1;
+  }
 }
 
-.rarity-button-active {
-  filter: grayscale(0%);
-  -webkit-filter: drop-shadow(0 0 5px #222);
-  opacity: 1;
+@media (prefers-color-scheme: light) {
+  .rarity-button-active {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px black);
+    opacity: 1;
+  }
+
+  .rarity-button-active:hover {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px black);
+    opacity: 1;
+  }
 }
 
-.rarity-button-active:hover {
-  filter: grayscale(0%);
-  -webkit-filter: drop-shadow(0 0 5px #222);
-  opacity: 1;
+@media (prefers-color-scheme: dark) {
+  .rarity-button-active {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px white);
+    opacity: 1;
+  }
+
+  .rarity-button-active:hover {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px white);
+    opacity: 1;
+  }
 }
 
 label {

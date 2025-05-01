@@ -6,6 +6,7 @@ export interface SkillOrganized {
   skillMaxLevel: number;
   skillInitCd: number;
   unknown1: string;
+  multiSkills: string;
   parameters: number[];
 }
 
@@ -17,6 +18,7 @@ export const emptySkillOrganized = () => ({
   skillMaxLevel: -1,
   skillInitCd: -1,
   unknown1: '',
+  multiSkills: '',
   parameters: []
 })
 
@@ -37,6 +39,7 @@ export const SkillApiToOrganized = (result: SkillResult): SkillOrganized => {
     skillMaxLevel: result.skill_max_level,
     skillInitCd: result.skill_init_cd,
     unknown1: result.unknown_1,
+    multiSkills: result.multi_skills,
     parameters: checkStringAndSplitToNum(result.parameters, '|'),
   }
   return(organized)

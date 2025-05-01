@@ -16,28 +16,45 @@
 
 .type-button {
   flex-basis: 100%;
-  flex: 1;
   filter: grayscale(100%);
   opacity: 0.5;
-  padding: 0;
+  padding: 0.5rem;
   border-width: 0;
   background: transparent;
 }
 
-.type-button:hover {
-  cursor: pointer;
-  filter: grayscale(0%);
-  opacity: 1;
+@media (min-width: 700px) { 
+  .type-button:hover {
+    cursor: pointer;
+    filter: grayscale(0%);
+    opacity: 1;
+  }
 }
 
-.type-button-active {
-  filter: grayscale(0%);
-  -webkit-filter: drop-shadow(0 0 5px #222);
-  opacity: 1;
+@media (prefers-color-scheme: light) {
+  .type-button-active {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px black);
+    opacity: 1;
+  }
+
+  .type-button-active:hover {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px black);
+    opacity: 1;
+  }
 }
 
-.type-button-active:hover {
-  filter: grayscale(0%);
-  -webkit-filter: drop-shadow(0 0 5px #222);
-  opacity: 1;
+@media (prefers-color-scheme: dark) {
+  .type-button-active {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px white);
+    opacity: 1;
+  }
+
+  .type-button-active:hover {
+    filter: grayscale(0%);
+    -webkit-filter: drop-shadow(0 0 2px white);
+    opacity: 1;
+  }
 }
