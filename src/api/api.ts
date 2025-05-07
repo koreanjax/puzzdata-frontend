@@ -48,7 +48,7 @@ export const fetchCard = async (search: number): CardResult => {
 }
 
 export const fetchSkill = async (search: number): SkillResult => {
-  let data: CardResult = emptySkillResult()
+  let data: SkillOrganized | SkillOrganized[]
   try {
     let queryString: string = API_URL + API_SKILL + API_KEY_ID + search
     const response = await fetch(queryString)
@@ -64,7 +64,7 @@ export const fetchSkill = async (search: number): SkillResult => {
 }
 
 export const fetchFilter = async (filterString: string): SearchResult[] => {
-  let data: CardResult = emptySkillResult()
+  let data: CardResult = emptyCardResult()
   try {
     let queryString: string = API_URL + API_FILTER + filterString
 

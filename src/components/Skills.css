@@ -1,34 +1,57 @@
 .skill-header {
   box-sizing: border-box;
-  width:100%;
-  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  border-width: 0px;
   border-width: 1px;
   border-style: solid;
+  border-style: solid;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
-.skills {
+.skill {
   display: flex;
-  flex-wrap: wrap;
-  row-gap: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.skill-evolve-icon + .skill {
+  margin-top: 0;
+}
+
+.skill-evolve-icon {
+  padding:0.1rem;
+}
+
+.skill + .skill {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.active-skill {
+  background: #6CB4EE;
+}
+
+.leader-skill {
+  background: #20B2AA;
 }
 
 .skill-name {
   box-sizing: border-box;
-  font-size: 14px;
-  width:100%;
+  font-size: 15px;
   padding:0.5rem;
-  border-width: 0px;
-  border-bottom: 1px;
-  border-style: solid;
+  color: black;
 }
 
 .skill-text {
   display: inline-block;
   padding:0.5rem;
-  border-width: 0px;
+  border-width: 0px 1px 1px 1px;
   border-style: solid;
+  border-style: solid;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .skill-text-test {
@@ -47,6 +70,25 @@
   padding-left: 0.25rem;
 }
 
+.skill-icon-span ~ .skill-icon-span {
+  padding-left: 0.25rem;
+}
+
 .skill-icon-span + .skill-text-test {
   padding-left: 0.25rem;
+}
+
+.skill-details {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  color: black;
+}
+
+.skill-cd {
+  padding: 0.5rem;
+}
+
+.skill-loop {
+  padding-right: 0.5rem;
 }

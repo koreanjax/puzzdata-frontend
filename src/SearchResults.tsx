@@ -1,14 +1,21 @@
 import './SearchResults.css'
-import { memo, useEffect } from 'React'
+import { memo, useEffect, useRef } from 'React'
 import { realId } from './helper/general-helper.ts'
 import { urlIcon } from './helper/icon-helper.ts'
 
 const SearchResults = ({results, setSelected}) => {
+  const scrollRef = useRef(null)
+
+  // useRef cannot be set to custom components
+  useEffect(() => {
+    scrollRef.current.scrollTo(0,0);
+  }, [results])
+
   const handleClick = (id) => {
     setSelected(id)
   }
 
-  const ResultsTable = () => {
+  const ResultsRows = () => {
     return(
       results.map(result => (
         <ResultsRow key={result.monster_id} result={result}/>
@@ -27,8 +34,8 @@ const SearchResults = ({results, setSelected}) => {
   }
 
   return(
-    <div id="search-results-table" className="search-results-table">
-      <ResultsTable />
+    <div ref={scrollRef} className="search-results-table">
+      <ResultsRows />
     </div>
   )
 }

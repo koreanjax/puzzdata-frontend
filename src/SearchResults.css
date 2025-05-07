@@ -6,9 +6,20 @@
   overflow-y: hidden;
 }
 
+.card ~ .search-results {
+  margin: 0;
+  padding-top: 0;
+}
+
+.filter ~ .search-results {
+  flex: 0;
+  margin: 0;
+  padding-top: 0;
+}
+
 .search-results-table {
   max-height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overscroll-behavior-y: none;
   border-radius: .5rem;
   border-width: 1px;

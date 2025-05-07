@@ -1,9 +1,15 @@
 .filter {
   width: 100%;
-  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+  scrollbar-width: none;
   position: relative;
   margin-top: 0.5rem;
-  padding: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   box-sizing: border-box;
   border-radius: 0.5rem;
   border-width: 1px;
@@ -11,22 +17,75 @@
 }
 
 .filter-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
   box-sizing: border-box;
   font-size: 14px;
+  padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   border-width: 0px;
   border-bottom: 1px;
   border-style: solid;
 }
 
+@media (prefers-color-scheme: light) {
+  .filter-title {
+    background-color: white;
+  }
+
+  .filter-search {
+    background-color: white;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .filter-title {
+    background-color: black;
+  }
+
+  .filter-search {
+    background-color: black;
+  }
+}
+
+.filter-category-selection {
+  display: flex;
+}
+
+.filter-catergory {
+  border-width: 1px;
+  border-radius: 0.5rem;
+  border-style: solid;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 .filter-info-header {
+  display: flex;
+  justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-.filter-menu {
+.filter-menu-card {
   display:flex;
   flex-wrap: wrap;
+}
+
+.filter-menu-skill {
+  display:flex;
+  flex: 1;
 }
 
 .awkn-stage {
@@ -49,8 +108,16 @@
 }
 
 .filter-search {
+  position: sticky;
+  bottom: 0;
+  border-width: 1p;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   display: flex;
   justify-content: center;
+  border-width: 0px;
+  border-top: 1px;
+  border-style: solid;
 }
 
 .filter-search-icon {
@@ -64,6 +131,21 @@
   border-style: solid;
 }
 
+.filter-add-icon {
+  padding: 0.5rem;
+  cursor: pointer;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  border-radius: .5rem;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.filter-add-icon + .filter-search-icon {
+  margin-left: 0.5rem;
+}
+
 .awkn-header {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -73,7 +155,7 @@
 .awkn-table {
   padding: 0.5rem;
   display: grid;
-  grid-template-columns: 12% 12% 12% 12% 12% 12% 12%;
+  grid-template-columns: 12% 12% 12% 12% 12% 12% 12% 12%;
   justify-content: space-between;
 }
 
@@ -94,16 +176,87 @@
   padding-top: 0.3rem;
 }
 
-.filter-column {
+.filter-page {
+  flex: 1;
   width: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
 }
 
-@media (min-width: 700px) {
-  .filter-search-icon:hover {
-    border-color: #646cff;
+.filter-column {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  display:flex;
+  flex-direction: column;
+}
+
+.skill-stage {
+  height: auto;
+  overflow-y: scroll;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.skill-add-icon { 
+  postion: sticky;
+  top: 0;
+  cursor: pointer;
+}
+
+.skill-list {
+  position: sticky;
+  bottom: 0;
+}
+
+.filter-skill-header {
+}
+
+.filter-skill-selection{
+  flex: 1;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.filter-skill-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.filter-add-list-icon {
+  padding: 0.5rem;
+  cursor: pointer;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  border-radius: .5rem;
+  border-width: 1px;
+  border-style: solid;
+}
+
+@media (min-width: 800px) {
+  .filter-menu-card {
+    height: 100%;
+  }
+
+  .filter-menu-skill {
+    height: 100%;
+  }
+
+  .filter-page {
+    flex-direction: row;
   }
 
   .filter-column {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     width: 50%;
   }
 

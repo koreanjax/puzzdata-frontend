@@ -7,8 +7,13 @@
 }
 
 .card-header {
-  width: 100%;
+  z-index: 1;
+  padding-top: 0.5rem;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
   display: flex;
+  position: sticky;
+  top: 0;
 }
 
 .card-id-name {
@@ -36,5 +41,20 @@
 
 .card-close {
   padding-left: 0.5rem;
+}
+
+.card-close-icon {
   cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+  .card-header {
+    background-color: white;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .card-header {
+    background-color: black;
+  }
 }

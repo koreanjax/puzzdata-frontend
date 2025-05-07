@@ -7,7 +7,6 @@ export const checkLevel = (newLevel: string, maxLevel:number, limitPercent: numb
   } else if (filtered > maxLevel && limitPercent === 0) {
     return(maxLevel)
   } else if (filtered === "") {
-    console.log(filtered)
     return(0)
   } else {
     return(Number(filtered))

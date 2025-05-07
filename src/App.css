@@ -8,16 +8,28 @@
   padding: 0.5rem;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 800px) {
   .App {
-    width: 40rem;
+    width: 60rem;
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .App {
     width: 100vw;
   }
+}
+
+.rights {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.filter + .card {
+  height: 0;
+  padding: 0;
+  margin: 0;
 }
 
 img {

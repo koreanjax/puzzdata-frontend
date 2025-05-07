@@ -8,13 +8,16 @@
 
 .card {
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
   scrollbar-width: none;
   z-index: 1;
   margin-top: 0.5rem;
   box-sizing: border-box;
   width:100%;
-  padding:0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   border-radius: 0.5rem;
   border-width: 1px;
   border-style: solid;
@@ -37,6 +40,7 @@
 
 .icon-row {
   display: flex;
+  padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 

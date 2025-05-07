@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import * as CI from 'react-icons/ci'
+import { CiFilter,CiSearch } from "react-icons/ci";
 import { fetchSearch, fetchCard } from './api/api.ts'
 import './SearchBar.css'
 
@@ -25,7 +25,7 @@ export const SearchBar = ({setSearched, setResults, setSelected, showFilter, set
   return(
     <div className="search-bar">
       <div className="search">
-        <CI.CiSearch size={24}/>
+        <CiSearch size={24}/>
         <form className="search-form" onSubmit={handleSubmit}>
           <input id="search"
             className="search-input"
@@ -36,7 +36,7 @@ export const SearchBar = ({setSearched, setResults, setSelected, showFilter, set
         </form>
       </div>
       <div className="filter-icon" onClick={handleClick} >
-        <CI.CiFilter size={24}/>
+        <CiFilter size={24}/>
       </div>
     </div>
   )

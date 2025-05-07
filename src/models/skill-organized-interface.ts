@@ -13,7 +13,7 @@ export interface SkillOrganized {
 export const emptySkillOrganized = () => ({
   skillId: 0,
   name: '',
-  text: '',
+  text: 'None',
   skillType: -1,
   skillMaxLevel: -1,
   skillInitCd: -1,
