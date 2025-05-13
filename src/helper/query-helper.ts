@@ -1,15 +1,15 @@
 const QUERY_ATTR_BASE: string = 'attrs='
 const QUERY_TYPE_BASE: string = 'types='
 const QUERY_RARITY_BASE: string = 'rarity='
-const QUERY_COST_BASE: string = 'cost='
+// const QUERY_COST_BASE: string = 'cost='
 const QUERY_AWKN_BASE: string = 'awkns='
 const QUERY_SKILL_BASE: string = 'skill='
 
-export const addFilters = (activeFilters) => {
+export const addFilters = (activeFilters: boolean[]) => {
   if(arrayAllEqual(activeFilters)) {
     return('-1')
   } else {
-    const filters: string = []  
+    const filters: string[] = []  
     activeFilters.map((active, index) => {
       const filter: string = active ? index.toString() : '-1'
       filters.push(filter)
@@ -18,25 +18,25 @@ export const addFilters = (activeFilters) => {
   }
 }
 
-const addTypeFilter = (activeFilters) => {
+const addTypeFilter = (activeFilters: boolean[]) => {
   if(arrayAllEqual(activeFilters)) {
     return('-1')
   } else {
-    const filters: string = []  
-    activeFilters.map((active, index) => {
+    const filters: string[] = []  
+    activeFilters.map((active: boolean, index: number) => {
       if(active) {
-        filters.push(index)
+        filters.push(index.toString())
       }
     })
     return(filters.join(','))
   }
 }
 
-const arrayAllEqual = (booleanArray) => {
+const arrayAllEqual = (booleanArray: boolean[]) => {
   return (new Set(booleanArray).size === 1)
 }
 
-export const queryAttributes = (main, sub, third) => {
+export const queryAttributes = (main: boolean[], sub: boolean[], third: boolean[]) => {
   const attrs: string[] = []
   attrs.push(addFilters(main))
   attrs.push(addFilters(sub))
@@ -44,21 +44,20 @@ export const queryAttributes = (main, sub, third) => {
   return(QUERY_ATTR_BASE+attrs.join('|'))
 }
 
-export const queryTypes = (type) => {
-  const types: string[] = []
+export const queryTypes = (type: boolean[]) => {
   return(QUERY_TYPE_BASE+(addTypeFilter(type)))
 }
 
-export const queryRarity = (rarity) => {
+export const queryRarity = (rarity: boolean[]) => {
   const rarities: string[] = []
   rarities.push(addFilters(rarity))
   return(QUERY_RARITY_BASE+rarities.join('|'))
 }
 
-export const queryAwakenings = (awkns) : string => {
-  const tempList: string[] = []
-  Object.keys(awkns).map((awkn, index) => {
-    tempList.push([(parseInt(awkn)+1).toString(), awkns[awkn].toString()])
+export const queryAwakenings = (awkns: Record<number, number>) : string => {
+  const tempList: string[][] = []
+  Object.keys(awkns).map((awkn: string) => {
+    tempList.push([(parseInt(awkn)+1).toString(), awkns[parseInt(awkn)].toString()])
   })
   const awknQuery = tempList.length > 0 ? tempList.join("|") : "-1"
   return (QUERY_AWKN_BASE+awknQuery)
@@ -79,12 +78,13 @@ const skillToQuery = {
   'orbrefresh': '10',
   'orbspinner': '207',
   'orbspecificspinner': '249',
-  'cap': '241,246,247',
+  'cap': '241|258-*,*,1=1',
+  'jojotheworld': '246|247',
   'capslot': '258',
   'capattribute': '263',
-  'attack': '50-*,<5,*|88|90-*,<5,<5,*|92|156-*,*,*,*,2,*|168',
+  'attack': '50-*,<5,*|88|90-*,<5,<5,*|92|156-*,*,*,*,=2,*|168',
   'attackslot': '230',
-  'rcv': '50',
+  'rcv': '50-*,=5,*|90-*,=5,=5,*',
   'mass': '51',
   'shieldpercent': '3|156,*,*,*,*,=3,*',
   'shieldattribute': '21',
@@ -105,14 +105,14 @@ const skillToQuery = {
   'void': '191',
   'defense': '19',
   'shield': '259',
-  'ctw': '5|246|247',
+  'ctw': '5',
   'moveflat': '132-*,>0,*',
   'movepercent': '132-*,*,>0',
-  'attributesingle': '2|59|84|115|143-*,*,=1,*',
+  'attributesingle': '2|59|84|86|115|143-*,*,=1,*',
   'attributemass': '0|1|58|85|143-*,*,=0,*',
-  'fixedsingle': '55|86|188',
+  'fixedsingle': '55|188',
   'fixedmass': '56',
-  'poison': 'P4',
+  'poison': '4',
   'noskyfall': '184',
   'skyfall': '126',
   'enhance': '180',
@@ -143,12 +143,11 @@ const skillToQuery = {
   'delayed': '248'
 }
 
-export const querySkill = (skill): string => {
+export const querySkill = (skill: string[]): string => {
   const tempList: string[] = []
 
-  skill.map(skillName => {
-    console.log(skillName)
-    tempList.push(skillToQuery[skillName])
+  skill.map((skillName: string) => {
+    tempList.push(skillToQuery[skillName as keyof typeof skillToQuery])
   })
 
   const skillQuery = tempList.length > 0 ? tempList.join(".") : "-1"

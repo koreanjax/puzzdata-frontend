@@ -2,12 +2,12 @@
 export const checkLevel = (newLevel: string, maxLevel:number, limitPercent: number): number => {
   const filtered = newLevel.replace(/\D/g, "").toString()
 
-  if(filtered > 120 && limitPercent > 0) {
-    return(120)
-  } else if (filtered > maxLevel && limitPercent === 0) {
-    return(maxLevel)
-  } else if (filtered === "") {
+  if (filtered === "") {
     return(0)
+  } else if(Number(filtered) > 120 && limitPercent > 0) {
+    return(120)
+  } else if (Number(filtered) > maxLevel && limitPercent === 0) {
+    return(maxLevel)
   } else {
     return(Number(filtered))
   }
@@ -15,8 +15,8 @@ export const checkLevel = (newLevel: string, maxLevel:number, limitPercent: numb
 
 
 export const checkPlus = (newPlus: string): number => {
-  const filtered = newPlus.replace(/\D/g, "").toString()
-  if(filtered > 99) {
+  const filtered: string = newPlus.replace(/\D/g, "").toString()
+  if(Number(filtered) > 99) {
     return(99)
   } else if (filtered === "") {
     return(0)
@@ -35,7 +35,7 @@ export const calcStats = (level: number, maxLevel: number, limitPercent: number,
   if (level === 0){
     return(vals[0])
   } else if (level < 100) {
-    let growth: nubmer = (maxLevel > 1) ? (level - 1) / (maxLevel - 1) : 1
+    let growth: number = (maxLevel > 1) ? (level - 1) / (maxLevel - 1) : 1
     let diff: number = vals[1] - vals[0]
     let finalStat: number = vals[0] + diff * Math.pow(growth, vals[2]/10)
     return(Math.round(finalStat))
@@ -49,5 +49,7 @@ export const calcStats = (level: number, maxLevel: number, limitPercent: number,
     let statPerSuperLimitLevel: number = (vals[1]*(statFlag/100)/10)
     let finalStat: number = (level - 110)*statPerSuperLimitLevel+initStat
     return(Math.round(finalStat))
+  } else {
+    return(0)
   }
 }

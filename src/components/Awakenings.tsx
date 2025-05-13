@@ -1,13 +1,17 @@
-const awknsImg = Object.values(import.meta.glob('../assets/awakenings/*.png', { eager: true, as: 'url' }))
-const filterAwknsImg = Object.values(import.meta.glob('../assets/filter/awakenings/*.png', { eager: true, as: 'url' }))
+const awknsImg: string[] = Object.values(import.meta.glob('../assets/awakenings/*.png', { eager: true, as: 'url' }))
+const filterAwknsImg: string[] = Object.values(import.meta.glob('../assets/filter/awakenings/*.png', { eager: true, as: 'url' }))
 
+interface IFilterAwakeningsProps {
+  onClick: (delAwkn: number) => void
+}
 // Lay out the table of awakenings to choose from
 // in the filter menu
-export const FilterAwakenings = ({onClick}) => {
+export const FilterAwakenings: React.FC<IFilterAwakeningsProps> = (props) => {
+  const {onClick} = props
   return (
     <div className="awkn-table">
       {filterAwknsImg.map((awkn, index) => (
-        <img key={index} className="awkn-filter" onClick={() => onClick(index)} src={awkn} />
+        <img key={index} className="awkn-filter" onClick={() => onClick(index)} src={awkn.toString()} />
       ))}
     </div>
   )
@@ -20,23 +24,31 @@ export const FilterAwakening = ({index}: {index: number}) => {
   )
 }
 
+interface IAwakeningProps {
+  awkns: number[]
+}
 // Display card awakenings on card selection
-export const Awakening = ({awkns}) => {
+export const Awakening: React.FC<IAwakeningProps> = (props) => {
+  const {awkns} = props
   if (awkns.length === 0) {
     return(null)
   }
   return (
     <div className="awakenings">
-      {awkns.map((awkn, key) => (
+      {awkns.map((awkn: number, key: number) => (
         <img key={key} className="awakening" src={awknsImg[awkn]} />
       ))}
     </div>
   )
 }
 
+interface ISuperAwakeningProps {
+  awkns: number[]
+}
 // Display card awakenings on card selection
 // Super Awakenings always have the ? Awakening to denote selectability
-export const SuperAwakening = ({awkns}) => {
+export const SuperAwakening: React.FC<ISuperAwakeningProps> = (props) => {
+  const { awkns } = props
   if(awkns.length === 0) {
     return(null)
   }
@@ -50,9 +62,13 @@ export const SuperAwakening = ({awkns}) => {
   )
 }
 
+interface ISyncAwakeningProps {
+  awkn: number
+}
 // Display card awakenings on card selection
 // There is only one Sync Awakening
-export const SyncAwakening = ({awkn}) => {
+export const SyncAwakening: React.FC<ISyncAwakeningProps> = (props) => {
+  const { awkn } = props
   if(awkn === 0) {
     return(null)
   }

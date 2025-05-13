@@ -30,30 +30,35 @@
 @media (prefers-color-scheme: light) {
   .rarity-button-active {
     filter: grayscale(0%);
-    -webkit-filter: drop-shadow(0 0 2px black);
+    background-color: black !important;
+    color: white !important;
     opacity: 1;
   }
-
-  .rarity-button-active:hover {
-    filter: grayscale(0%);
-    -webkit-filter: drop-shadow(0 0 2px black);
-    opacity: 1;
+  @media (min-width: 700px) { 
+    .rarity-button-active:hover {
+      filter: grayscale(0%);
+      -webkit-filter: drop-shadow(0 0 2px black);
+      opacity: 1;
+    }
   }
 }
 
 @media (prefers-color-scheme: dark) {
   .rarity-button-active {
-    filter: grayscale(0%);
-    -webkit-filter: drop-shadow(0 0 2px white);
+    background-color: white !important;
+    color: black !important;
     opacity: 1;
   }
-
-  .rarity-button-active:hover {
-    filter: grayscale(0%);
-    -webkit-filter: drop-shadow(0 0 2px white);
-    opacity: 1;
+  @media (min-width: 700px) { 
+    .rarity-button-active:hover {
+      filter: grayscale(0%);
+      -webkit-filter: drop-shadow(0 0 2px white);
+      opacity: 1;
+    }
   }
 }
+
+
 
 label {
   pointer-events: none;

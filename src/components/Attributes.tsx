@@ -1,9 +1,15 @@
 import './Attributes.css'
-import { useState } from 'React'
 
 const attrImg = Object.values(import.meta.glob('../assets/filter/attributes/*.png', { eager: true, as: 'url' }))
 
-export const Attributes = ({headerText, attrActive, setAttrActive}) => {
+interface IAttributesProp {
+  headerText: string
+  attrActive: boolean[]
+  setAttrActive: React.Dispatch<React.SetStateAction<boolean[]>>
+}
+
+export const Attributes: React.FC<IAttributesProp> = (props) => {
+  const { headerText, attrActive, setAttrActive } = props
   const classes:string = "attr-button "
 
   const handleAttr = (index: number) => {

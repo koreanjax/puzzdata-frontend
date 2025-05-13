@@ -1,11 +1,15 @@
-import * as CI from 'react-icons/ci'
 import './Rarity.css'
-import { useState } from 'React'
+import { SetStateAction } from 'react'
 
 const RARITY: string = 'Rarity'
-const MAX_RARITY: nubmer = 10 
+const MAX_RARITY: number = 10 
 
-export const Rarity = ({rarityActive, setRarityActive}) => {
+interface IRarityProps {
+  rarityActive: boolean[]
+  setRarityActive: React.Dispatch<SetStateAction<boolean[]>>
+}
+export const Rarity: React.FC<IRarityProps> = (props) => {
+  const {rarityActive, setRarityActive} = props
   const handleRarity = (index: number) => {
     const tempRarityActive = [...rarityActive]
     tempRarityActive[index] = !tempRarityActive[index]
@@ -17,7 +21,7 @@ export const Rarity = ({rarityActive, setRarityActive}) => {
 
     const classes:string = "rarity-button "
 
-  	for (let index: nubmer = 0; index < MAX_RARITY; index++) {
+  	for (let index: number = 0; index < MAX_RARITY; index++) {
       const numRarity: string = (index+1).toString()
   	  grid.push(
   	  	<div key={index}

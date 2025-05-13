@@ -8,6 +8,26 @@
   padding: 0.5rem;
 }
 
+.logo {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon {
+  width: 50%;
+}
+
+.loading {
+  z-index: 1;
+  width: 20%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @media (min-width: 800px) {
   .App {
     width: 60rem;
@@ -32,6 +52,10 @@
   margin: 0;
 }
 
+li + li {
+  margin-top: 10px;
+}
+
 img {
   -webkit-user-drag: none;
   -webkit-user-select: none;
@@ -42,6 +66,39 @@ img {
   -o-user-drag: none;
   -o-user-select: none;
   user-drag: none;
+  user-select: none;
+}
+
+.loading ~ .card {
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.loading ~ .search-results {
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.loading ~ .filter {
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
   user-select: none;
 }
 

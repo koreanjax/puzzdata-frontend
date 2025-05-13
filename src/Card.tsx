@@ -1,9 +1,10 @@
 import { fetchCard, fetchSkill } from './api/api.ts'
-import { useState, MutableRefObject, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './Card.css'
 import { HiOutlineArrowDown } from "react-icons/hi"
-import { CardOrganized, emptyCardOrganized, CardApiToOrganized } from './models/card-organized-interface.ts'
-import { SkillOrganized, emptySkillOrganized, SkillApiToOrganized } from './models/skill-organized-interface.ts'
+import { CardOrganized, emptyCardOrganized } from './models/card-organized-interface.ts'
+import { SkillResult } from './models/data-interface.ts'
+import { SkillApiToOrganized, SkillOrganized, emptySkillOrganized } from './models/skill-organized-interface.ts'
 import { CardHeader } from './components/CardHeader.tsx'
 import { Icon } from './components/Icon.tsx'
 import { Stat } from './components/Stat.tsx'
@@ -14,17 +15,22 @@ import { Skills } from './components/Skills.tsx'
 import { Keywords } from './components/Keywords.tsx'
 import { calcStats, checkLevel } from './helper/stat-helper.ts'
 
-export const Card = ({id, setSelected}) => {
-  const [card, setCard] = useState<CardOrganized>(emptyCardOrganized)
+interface ICardProps {
+  id: number
+  setSelected: React.Dispatch<React.SetStateAction<number>>
+}
+
+export const Card: React.FC<ICardProps> = (props) => {
+  const [card, setCard] = useState<CardOrganized>(emptyCardOrganized())
   const [level, setLevel] = useState(0)
   
   const [active, setActive] = useState<SkillOrganized>(emptySkillOrganized)
-  const [activeEvo, setActiveEvo] = useState<SkillOrganized[]>([])
+  const [activeEvo, setActiveEvo] = useState<SkillResult[]>([])
   const [isEvo, setIsEvo] = useState<boolean>(false)
   const [isLoop, setIsLoop] = useState<boolean>(false)
   const [leader, setLeader] = useState<SkillOrganized>(emptySkillOrganized)
-  const [activeString, setActiveString] = useState<string>('')
-  const [leaderString, setLeaderString] = useState<string>('')
+  // const [activeString, setActiveString] = useState<string>('')
+  // const [leaderString, setLeaderString] = useState<string>('')
 
   const [hp, setHp] = useState<number>(0)
   const [atk, setAtk] = useState<number>(0)
@@ -35,7 +41,9 @@ export const Card = ({id, setSelected}) => {
   const [rcvPlus, setRcvPlus] = useState<number>(99)
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  // const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  const { id, setSelected } = props
 
   // useEffect(() => {
   //   document.addEventListener("mousedown", handleClickOutside, false)
@@ -55,8 +63,8 @@ export const Card = ({id, setSelected}) => {
     let mounted: boolean = true
     fetchCard(id).then(result => {
       if (mounted) {
-        setCard(CardApiToOrganized(result))
-        setLevel(result.max_level)
+        setCard(result)
+        setLevel(result.maxLevel)
       }
     })
     return () => {
@@ -82,7 +90,7 @@ export const Card = ({id, setSelected}) => {
     })
     fetchSkill(card.leader).then(result => {
       if (cardFetched){
-        setLeader(SkillApiToOrganized(result))
+        setLeader(result as SkillOrganized)
       }   
     })
     return () => {
@@ -105,16 +113,17 @@ export const Card = ({id, setSelected}) => {
   const activeSkills = []
   if (isEvo) {
     activeEvo.map((skill, index) => {
+      const organized = SkillApiToOrganized(skill)
       if (index > 0) {
         activeSkills.push(
           <Skills
             key={index}
             skillType={"Skill"}
-            skillName={skill.name}
-            skillText={skill.text}
+            skillName={organized.name}
+            skillText={organized.text}
             skillLoop={isLoop}
-            skillInitCd={skill.skill_init_cd}
-            skillMaxLevel={skill.skill_max_level}
+            skillInitCd={organized.skillInitCd}
+            skillMaxLevel={organized.skillMaxLevel}
           />)
         if (index + 1 < activeEvo.length) {
           activeSkills.push(<HiOutlineArrowDown key={index*10}className="skill-evolve-icon" size={20} />)
@@ -129,8 +138,8 @@ export const Card = ({id, setSelected}) => {
         skillName={active.name}
         skillText={active.text}
         skillLoop={isLoop}
-        skillInitCd={active.skill_init_cd}
-        skillMaxLevel={active.skill_max_level}
+        skillInitCd={active.skillInitCd}
+        skillMaxLevel={active.skillMaxLevel}
       />)
   }
 
@@ -159,7 +168,13 @@ export const Card = ({id, setSelected}) => {
       <SuperAwakening awkns={card.sAwkns} />
       <SyncAwakening awkn={card.syncAwkn} />
       {activeSkills}
-      <Skills skillType={"Leader Skill"} skillName={leader.name} skillText={leader.text} />
+      <Skills
+        skillType={"Leader Skill"}
+        skillName={leader.name}
+        skillText={leader.text}
+        skillLoop={false}
+        skillInitCd={0}
+        skillMaxLevel={0}/>
       <Keywords keywords={card.keywords} />
     </div>
   </div>

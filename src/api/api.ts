@@ -1,16 +1,16 @@
-import { Input, SearchResult, CardResult, SkillResult } from '../models/data-interface.ts'
-import { emptySearchResult, emptyCardResult, emptySkillResult } from '../data-interface-factory.ts'
+import { SearchResult, CardResult, SkillResult } from '../models/data-interface.ts'
+import { CardOrganized, CardApiToOrganized } from '../models/card-organized-interface.ts'
+import { SkillOrganized, SkillApiToOrganized } from '../models/skill-organized-interface.ts'
 
-const API_URL: string = 'http://10.0.0.205:8080'
-const API_SEARCH: string = '/search/'
+const API_URL: string = import.meta.env.VITE_API_URL
+const API_SEARCH: string = '/search?'
 const API_CARD: string = '/card/'
 const API_SKILL: string = '/skill/'
 const API_FILTER: string = '/filter/'
 const API_KEY_ID: string = 'id='
 const API_KEY_NAME: string = 'name='
 
-export const fetchSearch = async (search): SearchResult[] => {
-  let data: SearchResult[] = []
+export const fetchSearch = async (search: string): Promise<SearchResult[]> => {
   try {
     let queryString: string = API_URL + API_SEARCH
     if (search.match(/^[0-9]+$/)) {
@@ -24,15 +24,14 @@ export const fetchSearch = async (search): SearchResult[] => {
     if (!response.ok) {
      throw new Error(`HTTP error! status: ${response.status}`)
     }
-    data = await response.json()
+    const data = await response.json()
+    return data
   } catch (e: any) {
-    // TODO
+    throw new Error(e)
   }
-  return(data)
 }
 
-export const fetchCard = async (search: number): CardResult => {
-  let data: CardResult = emptyCardResult()
+export const fetchCard = async (search: number): Promise<CardOrganized> => {
   try {
     let queryString: string = API_URL + API_CARD + API_KEY_ID + search
     const response = await fetch(queryString)
@@ -40,15 +39,14 @@ export const fetchCard = async (search: number): CardResult => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    data = await response.json()
+    const data = CardApiToOrganized(await response.json() as CardResult)
+    return data
   } catch (e: any) {
-    TODO
+    throw new Error (e)
   }
-  return(data)
 }
 
-export const fetchSkill = async (search: number): SkillResult => {
-  let data: SkillOrganized | SkillOrganized[]
+export const fetchSkill = async (search: number): Promise<SkillOrganized | SkillResult[]> => {
   try {
     let queryString: string = API_URL + API_SKILL + API_KEY_ID + search
     const response = await fetch(queryString)
@@ -56,27 +54,30 @@ export const fetchSkill = async (search: number): SkillResult => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    data = await response.json()
+    const data = await response.json()
+    if (Array.isArray(data)) {
+      return(data as SkillResult[])
+    } else {
+      return(SkillApiToOrganized(data) as SkillOrganized)
+    }
+    return data
   } catch (e: any) {
-    TODO
+    throw new Error (e)
   }
-  return(data)
 }
 
-export const fetchFilter = async (filterString: string): SearchResult[] => {
-  let data: CardResult = emptyCardResult()
+export const fetchFilter = async (filterString: string): Promise<SearchResult[]> => {
   try {
     let queryString: string = API_URL + API_FILTER + filterString
 
-    console.log(queryString)
     const response = await fetch(queryString)
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    data = await response.json()
+    const data = await response.json()
+    return data
   } catch (e: any) {
-    TODO
+    throw new Error (e)
   }
-  return(data)
 }

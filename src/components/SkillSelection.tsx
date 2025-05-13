@@ -1,7 +1,6 @@
-import { useState } from 'React'
 import './SkillSelection.css'
 
-const skillKind = [
+const skillCategory = [
   { value: 'orb', label: 'Orb Related' },
   { value: 'enhance', label: 'Enhance / Effects' },
   { value: 'hp', label: 'HP / Shield' },
@@ -18,21 +17,6 @@ const skillKind = [
   { value: 'board', label: 'Board' },
   { value: 'etc', label: 'Etc.'}
 ]
-
-export const SkillCategoryList = ({selected, setLists}) => {
-  return(
-    <div className="filter-skill-select">
-      <select
-        value={selected}
-        onChange={e => setLists(e.target.value)}
-      >
-        {skillKind.map((option, index) => (
-          <option key={index} value={option.value}>{option.label}</option>
-        ))}
-      </select>
-    </div>
-  )
-}
 
 export const orbSkills = [
   { value: 'orbconvert', label: 'Convert Orbs' },
@@ -53,6 +37,7 @@ export const orbSkills = [
 
 export const enhanceSkills = [
   { value: 'cap', label: 'Self Damage Cap Change' },
+  { value: 'jojotheworld', label: 'Jojo\'s The World'},
   { value: 'capslot', label: 'Slot Specific Damage Cap Change' },
   { value: 'capattribute', label: 'Attribute Specific Damage Cap Change' },
   { value: 'attack', label: 'Attack Modifier' },
@@ -73,8 +58,8 @@ export const recoverySkills = [
   { value: 'unmatcahble', label: 'Recover Unmatchable' },
   { value: 'healflat', label: 'Recover HP by Amount' },
   { value: 'healrcv', label: 'Recover HP by RCV Percent' },
-  { value: 'healpercent', label: 'Recover HP by Percent' },
-  { value: 'healteamrcv', label: 'Recover HP by Overall RCV' }
+  { value: 'healpercent', label: 'Recover HP by Team HP Percent' },
+  { value: 'healteamrcv', label: 'Recover HP by Overall Team RCV' }
 ]
 
 export const turnSkills = [
@@ -135,9 +120,9 @@ export const skillSkills = [
 ]
 
 export const gravitySkills = [
-  { value: 'regularmass', label: 'Reduce Remaining HP% for All' },
-  { value: 'regularsingle', label: 'Reduce Remaining HP% for One' },
-  { value: 'truemass', label: 'Reduce HP% for All'}
+  { value: 'regularmass', label: 'Mass Target Reduce Remaining HP%' },
+  { value: 'regularsingle', label: 'Single Target Reduce Remaining HP%' },
+  { value: 'truemass', label: 'Mass Target Reduce HP%'}
 ]
 
 export const boardSkills = [
@@ -163,36 +148,58 @@ export const skillCollection = {
   'skill': skillSkills, 'board': boardSkills, 'etc': etcSkills
 }
 
-export const SkillList = ({skillList, setSelectedSkill}) => {
-  const skillArray = []
-
-  skillList.map((skill, index) => {
-    skillArray.push(<option key={index} value={skill.value}>{skill.label}</option>)
-  })
+interface ISkillCategoryListProps {
+  skillActive: Record<string, boolean>
+  setSkillActive: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
+}
+export const SkillCategoryList: React.FC<ISkillCategoryListProps> = (props) => {
+  const {skillActive, setSkillActive} = props
+  const handleSkillSelect = (skillValue: string) => {
+    const tempDictionary = {...skillActive}
+    if (tempDictionary[skillValue] === undefined) {
+      tempDictionary[skillValue] = true
+    } else {
+      delete tempDictionary[skillValue]
+    }
+    setSkillActive(tempDictionary)
+  }
+  const skillClassName = "skill-list-skill "
   return(
-    <>
-      Skill List
-      <div className="filter-skill-select">
-        <select
-          defaultValue={skillArray[0]}
-          onChange={e => setSelectedSkill(e.target.value)}
-        >
-          {skillArray}
-        </select>
-      </div>
-    </>
+    <div className="filter-skill-select">
+      {skillCategory.map((category, index) => (
+        <div key={index} className="skill-list-category">
+          <div className="skill-list-header">
+            {category.label}
+          </div>
+          <div className="skill-list-skill-container">
+            {skillCollection[category.value as keyof typeof skillCollection].map((skill, skillIndex) => (
+              <div key={skillIndex} className={skillActive[skill.value] ? skillClassName + "skill-list-skill-active" : skillClassName} onClick={() => handleSkillSelect(skill.value)}>
+                {skill.label}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   )
 }
 
-export const Skill = ({skillName, handleRemove, index}) => {
-  const extractSkillText = (skillToExtract): string => {
+interface ISkillProps {
+  skillName: string
+  handleRemove: (removeIndex: number) => void
+  index: number
+}
+export const Skill: React.FC<ISkillProps> = (props) => {
+  const {skillName, handleRemove, index} = props
+  const extractSkillText = (skillToExtract: string): string => {
     for (let category in skillCollection) {
-      for (let i = 0; i < skillCollection[category].length; i++) {
-        if (skillToExtract === skillCollection[category][i].value) {
-          return(skillCollection[category][i].label)
+      for (let i = 0; i < skillCollection[category as keyof typeof skillCollection].length; i++) {
+        if (skillToExtract === skillCollection[category as keyof typeof skillCollection][i].value) {
+          return(skillCollection[category as keyof typeof skillCollection][i].label)
         }
       }
     }
+    return("")
   }
   const label: string = extractSkillText(skillName)
 

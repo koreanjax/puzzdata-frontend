@@ -1,12 +1,13 @@
 import './Filter.css'
 import { CiEraser, CiSearch, CiSquarePlus } from "react-icons/ci";
-import { useState } from 'React'
+import { useEffect, useState } from 'react'
 import { fetchFilter } from './api/api.ts'
+import { SearchResult } from './models/data-interface.ts'
 import { Attributes } from './components/Attributes.tsx'
 import { Types } from './components/Types.tsx'
 import { Rarity } from './components/Rarity.tsx'
 import { FilterAwakening, FilterAwakenings } from './components/Awakenings.tsx'
-import { SkillCategoryList, SkillList, Skill, skillCollection } from './components/SkillSelection.tsx'
+import { SkillCategoryList, Skill } from './components/SkillSelection.tsx'
 import { queryAttributes, queryTypes, queryRarity, queryAwakenings, querySkill } from './helper/query-helper.ts'
 const maxStage: number = 10
 
@@ -16,20 +17,50 @@ const THIRD_ATTRIBUTE: string = 'Third Attribute'
 const TYPE: string = 'Type'
 const SETTINGS: string = 'settings?'
 
-export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) => {
+interface IFilterProps {
+  showFilter: boolean
+  setShowFilter: React.Dispatch<React.SetStateAction<boolean>>
+  setResults: React.Dispatch<React.SetStateAction<SearchResult[]>>
+  setSelected: React.Dispatch<React.SetStateAction<number>>
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const Filter: React.FC<IFilterProps> = (props) => {
   const [cardFilter, setCardFilter] = useState<boolean>(true)
   const [skillFilter, setSkillFilter] = useState<boolean>(false)
   const [skillFilterAdd, setSkillFilterAdd] = useState<boolean>(false)
-  const [awknStage, setAwknStage] = useState({})
+  const [awknStage, setAwknStage] = useState<Record<number, number>>({})
   const [attrMainActive, setAttrMainActive] = useState<boolean[]>(Array(6).fill(false))
   const [attrSubActive, setAttrSubActive] = useState<boolean[]>(Array(6).fill(false))
   const [attrThirdActive, setAttrThirdActive] = useState<boolean[]>(Array(6).fill(false))
   const [typeActive, setTypeActive] = useState<boolean[]>(Array(12).fill(false))
   const [rarityActive, setRarityActive] = useState<boolean[]>(Array(10).fill(false))
 
-  const [selectedCategory, setSelectedCategory] = useState('orb')
-  const [selectedSkill, setSelectedSkill] = useState('orbconvert')
+  // const [selectedCategory, setSelectedCategory] = useState('orb')
+  // const [selectedSkill, setSelectedSkill] = useState('orbconvert')
   const [skillList ,setSkillList] = useState<string[]>([])
+  const [skillActive, setSkillActive] = useState<Record<string, boolean>>({})
+
+  const {showFilter, setShowFilter, loading, setLoading, setResults, setSelected } = props
+
+  useEffect(() => {
+    const handleKeyPressed = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        if (skillFilterAdd) {
+          setSkillFilterAdd(false)
+          setSkillFilter(true)
+        }
+
+        if (showFilter && !skillFilterAdd) {
+          setShowFilter(false)
+        }
+      }
+    }
+    window.addEventListener("keydown", handleKeyPressed)
+
+    return () => window.removeEventListener("keydown", handleKeyPressed)
+  },[skillFilterAdd, showFilter])
 
   const isStageFull = (newAwkn: number) : boolean => {
     if (Object.keys(awknStage).length >= maxStage) {
@@ -71,6 +102,10 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
   }
 
   const handleSearch = () => {
+    if (loading) {
+      return
+    }
+    setLoading(true)
     const queryItems = []
     queryItems.push(queryAttributes(attrMainActive, attrSubActive, attrThirdActive))
     queryItems.push(queryTypes(typeActive))
@@ -79,15 +114,18 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
     queryItems.push(querySkill(skillList))
     
     const filterQuery = SETTINGS + queryItems.join('&')
+
     fetchFilter(filterQuery).then(results => {
       setResults(results)
       setShowFilter(!showFilter)
       setSelected(0)
+      setLoading(false)
     })
-    console.log(filterQuery)
   }
 
-  const handleToggle = (onToggle, offToggle) => {
+  const handleToggle = (
+  onToggle: React.Dispatch<React.SetStateAction<boolean>>,
+  offToggle: React.Dispatch<React.SetStateAction<boolean>>) => {
     onToggle(true)
     offToggle(false)
     setSkillFilterAdd(false)
@@ -97,27 +135,25 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
     setSkillFilterAdd(true)
     setCardFilter(false)
     setSkillFilter(false)
-    setSelectedCategory('orb')
-    setSelectedSkill(skillCollection['orb'][0].value)
   }
 
   const handleAddToList = () => {
     setSkillFilterAdd(false)
     setSkillFilter(true)
+    setSkillActive({})
     const temp = [...skillList]
-    temp.push(selectedSkill)
+    for (let skill in skillActive) {
+      if (!temp.includes(skill)) {
+        temp.push(skill)
+      }
+    }
     setSkillList(temp)
   }
 
-  const removeFromList = (removeIndex) => {
+  const removeFromList = (removeIndex: number) => {
     const temp = [...skillList]
     temp.splice(removeIndex, 1)
     setSkillList(temp)
-  }
-
-  const setBothLists = (category) => {
-    setSelectedCategory(category)
-    setSelectedSkill(skillCollection[category][0].value)
   }
 
   return(showFilter ? (
@@ -156,9 +192,9 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
             <div className="filter-awkn-settings">
               <div className="awkn-stage">
                 {Object.keys(awknStage).map((awkn, index) => (
-                  <div key={index} className="awkn-staged" onClick={() => handleAwakeningRemove(awkn)}>
-                    <FilterAwakening index={awkn} />
-                    x{awknStage[awkn]}
+                  <div key={index} className="awkn-staged" onClick={() => handleAwakeningRemove(parseInt(awkn))}>
+                    <FilterAwakening index={parseInt(awkn)} />
+                    x{awknStage[parseInt(awkn)]}
                   </div>
                 ))}
               </div>
@@ -172,10 +208,13 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
       <div className="filter-menu-skill">
         <div className="filter-page">
           <div className="filter-column">
-            <div className="skill-stage-test">
+            <div className="skill-stage">
               {skillList.map((skill, index) => (
                 <Skill key={index} skillName={skill} handleRemove={removeFromList} index={index} />
               ))}
+            </div>
+            <div className="filter-add-skill" onClick={handleAdd}>
+              Add Skill(s)
             </div>
           </div>
         </div>
@@ -185,27 +224,21 @@ export const Filter = ({showFilter, setShowFilter, setResults, setSelected }) =>
       <div className="filter-menu-skill">
         <div className="filter-skill-selection">
           <div className="filter-skill-header">
-            Select Skill Category
-            <SkillCategoryList selected={selectedCategory} setLists={setBothLists}/>
-          </div>
-          <div className="filter-skill-list">
-            <SkillList skillList={skillCollection[selectedCategory]} setSelectedSkill={setSelectedSkill} />
-            <div className="filter-add-list-icon" onClick={e => handleAddToList()}>
-              Add to List
-            </div>
+            <SkillCategoryList skillActive={skillActive} setSkillActive={setSkillActive} />
           </div>
         </div>
       </div>
       }
-      <div className="filter-search">
-        {skillFilter && 
-        <div className="filter-add-icon" onClick={handleAdd}>
-          <CiSquarePlus size={30} />
-        </div>
-        }
-        <div className="filter-search-icon" onClick={handleSearch} >
-          <CiSearch size={30}/>
-        </div>
+      <div className="filter-bottom-bar">
+        {skillFilterAdd ? (
+          <div className="filter-bottom-icon" onClick={handleAddToList} >
+            <CiSquarePlus size={30}/>
+          </div>
+        ) : (
+          <div className="filter-bottom-icon" onClick={handleSearch} >
+            <CiSearch size={30}/>
+          </div>
+        )}
       </div>
     </div>
     ) : (

@@ -7,6 +7,11 @@ export interface SearchResult {
   name: string;
 }
 
+export interface SearchOrganized {
+  monsterId: number;
+  name: string;
+}
+
 export interface CardResult {
   monster_id: number;
   name: string;
@@ -44,12 +49,13 @@ export interface CardResult {
 }
 
 export interface SkillResult {
-  skil_id: number;
+  skill_id: number;
   name: string;
   text: string;
   skill_type: number;
   skill_max_level: number;
   skill_init_cd: number;
-  unknown_1: string;
+  unknown1: string;
+  multiSkills: string;
   parameters: string;
 }

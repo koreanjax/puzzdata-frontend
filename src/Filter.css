@@ -35,7 +35,7 @@
     background-color: white;
   }
 
-  .filter-search {
+  .filter-bottom-bar {
     background-color: white;
   }
 }
@@ -45,7 +45,7 @@
     background-color: black;
   }
 
-  .filter-search {
+  .filter-bottom-bar {
     background-color: black;
   }
 }
@@ -107,7 +107,8 @@
   align-items: center;
 }
 
-.filter-search {
+.filter-bottom-bar {
+  z-index: 1;
   position: sticky;
   bottom: 0;
   border-width: 1p;
@@ -120,7 +121,7 @@
   border-style: solid;
 }
 
-.filter-search-icon {
+.filter-bottom-icon {
   padding: 0.5rem;
   cursor: pointer;
   background: transparent;
@@ -134,16 +135,39 @@
 .filter-add-icon {
   padding: 0.5rem;
   cursor: pointer;
+  display: flex;
   background: transparent;
   justify-content: center;
   align-items: center;
-  border-radius: .5rem;
   border-width: 1px;
+  border-bottom: 0px;
   border-style: solid;
 }
 
-.filter-add-icon + .filter-search-icon {
-  margin-left: 0.5rem;
+.skill-stage {
+  flex: 1;
+  overflow-y: scroll;
+  overscroll-behavior-y: none;
+  scrollbar-width: none;
+}
+
+.skill-list {
+  position: sticky;
+  bottom: 0;
+}
+
+.filter-add-skill {
+  position: sticky;
+  bottom: 0;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  border-width: 1px;
+  border-bottom: 0px;
+  border-style: solid;
 }
 
 .awkn-header {
@@ -193,29 +217,6 @@
   flex-direction: column;
 }
 
-.skill-stage {
-  height: auto;
-  overflow-y: scroll;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.skill-add-icon { 
-  postion: sticky;
-  top: 0;
-  cursor: pointer;
-}
-
-.skill-list {
-  position: sticky;
-  bottom: 0;
-}
-
-.filter-skill-header {
-}
-
 .filter-skill-selection{
   flex: 1;
   padding: 0.5rem;
@@ -243,11 +244,11 @@
 
 @media (min-width: 800px) {
   .filter-menu-card {
-    height: 100%;
+    flex: 1;
   }
 
   .filter-menu-skill {
-    height: 100%;
+    flex: 1;
   }
 
   .filter-page {

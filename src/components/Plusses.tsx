@@ -1,7 +1,17 @@
 import './Plusses.css'
 import { checkPlus } from '../helper/stat-helper.ts'
+import { SetStateAction } from 'react'
 
-export const Plusses = ({hp, atk, rcv, setHpPlus, setAtkPlus, setRcvPlus}) => {
+interface IPlussesProps {
+  hp: number
+  atk: number
+  rcv: number
+  setHpPlus: React.Dispatch<SetStateAction<number>>
+  setAtkPlus: React.Dispatch<SetStateAction<number>>
+  setRcvPlus: React.Dispatch<SetStateAction<number>>
+}
+export const Plusses: React.FC<IPlussesProps> = (props) => {
+  const {hp, atk, rcv, setHpPlus, setAtkPlus, setRcvPlus} = props
   // Break down each plus into a component and reuse?
   return(
   	<div className="plusses">

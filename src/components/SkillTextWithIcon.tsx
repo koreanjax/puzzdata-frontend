@@ -1,24 +1,24 @@
-const skillsImg = Object.values(import.meta.glob('../assets/skill/*.png', { eager: true, as: 'url' }))
+const skillsImgPrefix = import.meta.env.VITE_SKILL
 
-export const SkillTextWithIcon = ({skill}) => {
+interface ISkillTextWithIconProps {
+  skill: string
+}
+export const SkillTextWithIcon: React.FC<ISkillTextWithIconProps> = (props) => {
+  const {skill} = props
   if(skill.length === 0) {
     return null
   }
   const skillText = skill.split(/\{.*?\}/g)
-  const skillIcon = skill.match(/\{.*?\}/g)
+  const skillIcon = skill.match(/\{.*?\}/g) as RegExpMatchArray
+
   const skillParts = []
-  const textToIcon = (text: string) => {
+  const textToIcon = (text: string): string => {
     const curlyRemoved = text.replace(/\{(.*?)\}/, "$1")
     const leftBracketReplaced = curlyRemoved.replace("[", "%5B")
     const rightBracketReplaced = leftBracketReplaced.replace("]", "%5D")
-    const spaceReplaced = rightBracketReplaced.replaceAll(" ", "%20")
+    const spaceReplaced = rightBracketReplaced.replace(/ /g, "+")
     const pngAdded = spaceReplaced + ".png"
-    for (const [i, value] of skillsImg.entries()) {
-
-      if(value.includes(pngAdded)) {
-        return(value)
-      }
-    }
+    return(skillsImgPrefix + pngAdded)
   }
 
   const skillTextLength = skillText === null ? 0 : skillText.length

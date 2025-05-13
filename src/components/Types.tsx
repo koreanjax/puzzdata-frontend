@@ -1,11 +1,14 @@
 import './Types.css'
-import { useState } from 'React'
 
 const typesImg = Object.values(import.meta.glob('../assets/types/*.png', { eager: true, as: 'url' }))  
-const filterTypesImg = Object.values(import.meta.glob('../assets/filter/types/*.png', { eager: true, as: 'url' }))  
+const filterTypesImg: string[] = Object.values(import.meta.glob('../assets/filter/types/*.png', { eager: true, as: 'url' }))  
 
 // TODO: Add the words after icons
-export const Type = ({types}) => {
+interface ITypeProps {
+  types: number[]
+}
+export const Type: React.FC<ITypeProps> = (props) => {
+  const {types} = props
   return (
     <div className="types">
       {types.map((type, key) => (
@@ -15,7 +18,13 @@ export const Type = ({types}) => {
   )
 }
 
-export const Types = ({headerText, typeActive, setTypeActive}) => {
+interface ITypesProps {
+  headerText: string
+  typeActive: boolean[]
+  setTypeActive: React.Dispatch<React.SetStateAction<boolean[]>>
+}
+export const Types: React.FC<ITypesProps> = (props) => {
+  const {headerText, typeActive, setTypeActive} = props
   const handleType = (index: number) => {
     const tempTypeActive = [...typeActive]
     tempTypeActive[index] = !tempTypeActive[index]

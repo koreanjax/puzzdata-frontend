@@ -1,24 +1,39 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { CiFilter,CiSearch } from "react-icons/ci";
-import { fetchSearch, fetchCard } from './api/api.ts'
+import { fetchSearch } from './api/api.ts'
+import { SearchResult } from './models/data-interface.ts'
 import './SearchBar.css'
 
 const SEARCH_PLACEHOLDER: string = 'Search Monsters..'
 
-export const SearchBar = ({setSearched, setResults, setSelected, showFilter, setShowFilter}) => {
+interface ISearchBarProps {
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setResults: React.Dispatch<React.SetStateAction<SearchResult[]>>
+  setSelected: React.Dispatch<React.SetStateAction<number>>
+  showFilter: boolean
+  setShowFilter: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const SearchBar: React.FC<ISearchBarProps> = (props) => {
+  const { loading, setLoading, setResults, setSelected, showFilter, setShowFilter } = props
   const [search, setSearch] = useState('')
-  
   // Easier to use rather than onSubmit with a button?
   // TODO: Figure out what to default for initial search and use useEffect maybe?
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault()
-    fetchSearch(search).then(results => {
+    if (loading) {
+      return
+    }
+    setLoading(true)
+    fetchSearch(search).then((results: SearchResult[]) => {
+      setLoading(false)
       setSelected(0)
       setResults(results)
     })
   }
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setShowFilter(!showFilter)
   }
 

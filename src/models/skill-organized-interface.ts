@@ -1,3 +1,5 @@
+import { SkillResult } from './data-interface.ts'
+
 export interface SkillOrganized {
   skillId: number;
   name: string;
@@ -15,8 +17,8 @@ export const emptySkillOrganized = () => ({
   name: '',
   text: 'None',
   skillType: -1,
-  skillMaxLevel: -1,
-  skillInitCd: -1,
+  skillMaxLevel: 0,
+  skillInitCd: 0,
   unknown1: '',
   multiSkills: '',
   parameters: []
@@ -32,14 +34,14 @@ const checkStringAndSplitToNum = (str: string, delimiter: string): number[] => {
 
 export const SkillApiToOrganized = (result: SkillResult): SkillOrganized => {
   let organized: SkillOrganized = {
-    skillId: result.id,
+    skillId: result.skill_id,
     name: result.name,
     text: result.text,
     skillType: result.skill_type,
     skillMaxLevel: result.skill_max_level,
     skillInitCd: result.skill_init_cd,
-    unknown1: result.unknown_1,
-    multiSkills: result.multi_skills,
+    unknown1: result.unknown1,
+    multiSkills: result.multiSkills,
     parameters: checkStringAndSplitToNum(result.parameters, '|'),
   }
   return(organized)

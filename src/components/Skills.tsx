@@ -3,23 +3,33 @@ import { removeSkillColor } from '../helper/general-helper.ts'
 import { SkillTextWithIcon } from './SkillTextWithIcon.tsx'
 import { HiOutlineArrowPathRoundedSquare } from "react-icons/hi2"
 
-const skillsImg = Object.values(import.meta.glob('../assets/skill/*.png', { eager: true, as: 'url' }))
-
 const CD_BASE: string = "Turn(s): "
 const ACTIVE_SKILL: string = "Skill"
 
-export const Skills = ({skillType, skillName, skillText, skillLoop, skillInitCd, skillMaxLevel}) => {
+interface ISkillsProps {
+  skillType: string
+  skillName: string
+  skillText: string
+  skillLoop: boolean
+  skillInitCd: number
+  skillMaxLevel: number
+}
+export const Skills: React.FC<ISkillsProps> = (props) => {
+  const {skillType, skillName, skillText, skillLoop, skillInitCd, skillMaxLevel} = props
   let maxLevelCd: number = 0
   if(skillInitCd !== undefined && skillMaxLevel !== undefined) {
-    maxLevelCd = skillInitCd - (skillMaxLevel-1)
+    if (skillMaxLevel > 0) {
+      maxLevelCd = skillInitCd - (skillMaxLevel-1)
+    }
   }
 
   let cdString: string = ""
-
-  if (maxLevelCd > 0 && skillInitCd !== maxLevelCd) {
-    cdString = CD_BASE + skillInitCd.toString() + " -> " + maxLevelCd.toString()
-  } else if (maxLevelCd > 0) {
-    cdString = CD_BASE + skillInitCd.toString()
+  if (skillType === "Skill")  {
+    if (maxLevelCd > 0 && skillInitCd !== maxLevelCd) {
+      cdString = CD_BASE + skillInitCd.toString() + " -> " + maxLevelCd.toString()
+    } else if (maxLevelCd > 0) {
+      cdString = CD_BASE + skillInitCd.toString()
+    }
   }
 
   const skillNameClass = "skill-header "

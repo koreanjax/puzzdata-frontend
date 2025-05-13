@@ -1,8 +1,59 @@
-.filter-skill-select {
-  padding: 0.5rem
+.skill-list-category {
+  padding-top: 0.5rem;
+}
+
+.skill-list-header {
+  font-weight: bold;
+  border-width: 0px;
+  border-bottom: 1px;
+  border-style: solid;
+}
+
+.skill-list-skill-container {
+  padding-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+}
+
+.skill-list-skill {
+  padding: 0.5rem;
+  border-width: 1px;
+  border-radius: 0.5rem;
+  border-style: solid;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .skill-selection-skill {
   padding: 0.5rem;
   cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+@media (prefers-color-scheme: light) {
+  .skill-list-skill-active {
+    background-color: black !important;;
+    color: white !important;;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .skill-list-skill-active {
+    background-color: white !important;;
+    color: black !important;;
+  }
 }

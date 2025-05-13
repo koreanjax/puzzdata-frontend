@@ -1,10 +1,16 @@
 import './CardHeader.css'
 import { CiSquareRemove, CiStar } from "react-icons/ci";
 
-export const CardHeader = ({id, name, rarity, setSelected}) => {
+interface ICardHeaderProps {
+  id: number
+  name: string
+  rarity: number
+  setSelected: React.Dispatch<React.SetStateAction<number>>
+}
+
+export const CardHeader: React.FC<ICardHeaderProps> = (props) => {
+  const {id, name, rarity, setSelected} = props
   const realId: number = (id > 9899) ? id-100 : id
-  const fileName: string = realId.toString().padStart(5, "0")
-  const imgSrc: string = "https://dohzi9dodqiuu.cloudfront.net/icons/" + fileName + ".png"
 
   const numberAndRarity = []
 

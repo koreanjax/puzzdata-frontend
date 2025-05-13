@@ -1,6 +1,6 @@
 import { realId } from './general-helper.ts'
 
-const BASE_URL: string = 'https://padiconhost.s3.us-east-2.amazonaws.com/icons/'
+const BASE_URL: string = import.meta.env.VITE_ICON
 const ICON_EXT: string = '.png'
 
 export const urlIcon = (id: number): string => {

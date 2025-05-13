@@ -1,5 +1,7 @@
+import { CardResult } from './data-interface.ts'
+
 export interface CardOrganized {
-  monster_id: number;
+  monsterId: number;
   name: string;
   attrs: number[];
   types: number[];
@@ -10,8 +12,8 @@ export interface CardOrganized {
   fuseExp: number;
   coinValue: number;
   hpVals: number[];
-  atkVals: numbers[];
-  rcvVals: numbers[];
+  atkVals: number[];
+  rcvVals: number[];
   limitPercent: number;
   expVals: number[];
   active: number;
@@ -33,22 +35,21 @@ export interface CardOrganized {
 }
 
 export const emptyCardOrganized = () => ({
-  monster_id: -1,
+  monsterId: -1,
   name: '',
-  atrs: [],
+  attrs: [],
   types: [],
   rarity: 0,
   cost: -1,
   ultEvo: -1,
   maxLevel: -1,
-  fuesExp: -1,
+  fuseExp: -1,
   coinValue: -1,
   hpVals: [0,0,0],
   atkVals: [0,0,0],
   rcvVals: [0,0,0],
   limitPercent: -1,
-  maxExp: -1,
-  expGrowth: -1,
+  expVals: [0,0],
   active: 0,
   leader: 0,
   from: -1,
@@ -67,10 +68,6 @@ export const emptyCardOrganized = () => ({
   syncMats: []
 })
 
-
-const splitAndTrim = (str: string, delimiter: string): string[] => {
-  return str.split(/[{delimiter}]/).map(s => s.trim());
-}
 
 const checkStringAndSplitToStr = (str: string, delimiter: string): string[] => {
   if(!str) {
@@ -98,6 +95,7 @@ export const CardApiToOrganized = (result: CardResult): CardOrganized => {
     cost: result.cost,
     ultEvo: result.ult_evo,
     maxLevel: result.max_level,
+    fuseExp: result.fuse_exp,
     coinValue: result.coin_value,
     hpVals: checkStringAndSplitToNum(result.hp_vals, '|'),
     atkVals: checkStringAndSplitToNum(result.atk_vals, '|'),
@@ -107,13 +105,13 @@ export const CardApiToOrganized = (result: CardResult): CardOrganized => {
     active: result.active,
     leader: result.leader,
     from: result.from,
-    mats: checkStringAndSplitToNum(result.evolve_mats, '|'),
+    mats: checkStringAndSplitToNum(result.mats, '|'),
     awkns: checkStringAndSplitToNum(result.awkns, '|'),
     sAwkns: checkStringAndSplitToNum(result.super_awkns, '|'),
     assist: result.assist,
     expand: result.expand,
     base: result.base,
-    group: result.number,
+    group: result.group,
     mp: result.mp,
     collab: result.collab,
     keywords: checkStringAndSplitToStr(result.keywords, '|'),
